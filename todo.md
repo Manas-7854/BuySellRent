@@ -11,7 +11,8 @@
 # TODO :
  - Make the user dashboard page (done)
  - Make the items page (done)
- - make the item page (done)
  - make my cart page (done)
  - make order history (done)
- - make delivery page
+ - make delivery page (done)
+ - add new item page 
+ - add a page for showing items that the user has put up for selling
