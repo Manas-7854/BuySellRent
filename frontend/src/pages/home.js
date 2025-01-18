@@ -1,23 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; // Import useParams to get the dynamic user ID from the URL
 
 // pages and components
 import Navbar from '../components/navbar';
 
 const Home = () => {
+  // Get the user ID from the URL
+  const { userId } = useParams();
+  console.log("userid", userId);
+
   // Initial user details state
   const [userDetails, setUserDetails] = useState({
-    name: 'Manas Agrawal',
-    age: 20,
-    branch: 'CND (Computer Science and New Technologies)',
-    institution: 'IIIT Hyderabad',
-    year: '2nd Year (Dual Degree)',
+    name: '',
+    age: '',
+    branch: '',
+    institution: '',
+    year: '',
   });
+
+  // Loading state to show a loading spinner or message while data is being fetched
+  const [loading, setLoading] = useState(true);
 
   // State to control visibility of the edit form
   const [isEditing, setIsEditing] = useState(false);
 
   // State to temporarily store edited details
   const [editedDetails, setEditedDetails] = useState(userDetails);
+
+  // Fetch user details based on user ID
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        console.log("flag 1")
+        const response = await fetch(`http://localhost:4000/home/${userId}`);
+        console.log("flag 2")
+        const data = await response.json();
+        console.log("flag 3")
+
+        if (response.ok) {
+          setUserDetails(data); // Update state with fetched user data
+          setEditedDetails(data); // Set initial edited details
+          setLoading(false); // Set loading to false once data is loaded
+        } else {
+          console.error('Error fetching user data:', data);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchUserDetails();
+  }, [userId]); // The effect runs whenever the user ID in the URL changes
 
   // Handle change in input fields
   const handleChange = (e) => {
@@ -34,6 +69,11 @@ const Home = () => {
     setUserDetails(editedDetails); // Save the changes
     setIsEditing(false); // Close the edit form
   };
+
+  // Show loading indicator or error message if data is not yet loaded
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>

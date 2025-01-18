@@ -11,10 +11,13 @@ const cartRoutes = require('./routes/cart');
 const ordersRoutes = require('./routes/orders');
 const deliveryRoutes = require('./routes/delivery');
 const itemRoutes = require('./routes/item');
+const homeRoutes = require('./routes/home');
 
 
 // Use CORS to allow cross-origin requests
 app.use(cors());
+
+app.use(express.urlencoded({ extended: true }));
 
 // Use the routes
 
@@ -27,6 +30,8 @@ app.use('/orders', ordersRoutes);
 app.use('/delivery', deliveryRoutes);
 
 app.use('/item', itemRoutes);
+
+app.use('/home', homeRoutes);
 
 
 // Start the server

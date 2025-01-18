@@ -16,3 +16,11 @@
  - make delivery page (done)
  - add new item page 
  - add a page for showing items that the user has put up for selling
+
+ - create dummy data as it would be stored in the mongo and create the whole interface with respect to that 
+ - create multiple users and their details and render home pages with respect to that
+ - create a items array with list of all the items
+ - create a cartdata with items and user ids
+ - create a orders data with buyers, sellers and items ids
+
+ - actually create and connect with mongo and work with that data

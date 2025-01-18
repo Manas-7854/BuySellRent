@@ -139,7 +139,6 @@ const items = [
 // Get item by ID
 router.get('/:id', (req, res) => {
     const itemId = parseInt(req.params.id, 10);
-    console.log(itemId);
     const item = items.find((item) => item.id === itemId);
   
     if (item) {

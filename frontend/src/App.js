@@ -19,6 +19,10 @@ function App() {
             {/* Home Page */}
             <Route path='/' element={<Home />} />
 
+            {/* Home Page */}
+            <Route path='/home' element={<Home />} />
+            <Route path="/home/:userId" element={<Home />} />
+
             {/* All Items Page */}
             <Route path='/items' element={<ItemsPage />} />
 
