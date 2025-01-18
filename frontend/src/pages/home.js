@@ -7,7 +7,7 @@ import Navbar from '../components/navbar';
 const Home = () => {
   // Get the user ID from the URL
   const { userId } = useParams();
-  console.log("userid", userId);
+  // console.log("userid", userId);
 
   // Initial user details state
   const [userDetails, setUserDetails] = useState({

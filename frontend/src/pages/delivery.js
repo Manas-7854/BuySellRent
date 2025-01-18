@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; // Import useParams to get the dynamic user ID from the URL
 
 // Pages and components
 import Navbar from '../components/navbar';
 import Item from '../components/item'; // Assuming the Item component is available
 
 const DeliveryPage = () => {
+  const { userId } = useParams(); // Get the user ID from the URL
+
   // State to track items to deliver
   const [itemsToDeliver, setItemsToDeliver] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
@@ -17,7 +20,7 @@ const DeliveryPage = () => {
   useEffect(() => {
     const fetchDeliveryItems = async () => {
       try {
-        const response = await fetch('http://localhost:4000/delivery');
+        const response = await fetch(`http://localhost:4000/delivery/${userId}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

@@ -3,6 +3,7 @@ const express = require('express');
 
 const cors = require('cors');
 const app = express();
+
 const PORT = 4000;
 
 // import routes 
@@ -16,8 +17,6 @@ const homeRoutes = require('./routes/home');
 
 // Use CORS to allow cross-origin requests
 app.use(cors());
-
-app.use(express.urlencoded({ extended: true }));
 
 // Use the routes
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; // Import useParams to get the dynamic user ID from the URL
 
 // Import the Item component
 import Item from '../components/item';
@@ -6,6 +7,10 @@ import Item from '../components/item';
 import Navbar from '../components/navbar';
 
 const MyCartPage = () => {
+  // get the user if from the url
+  const { userId } = useParams();
+  console.log("userid", userId);
+
   // State to manage cart items
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true); // State for loading
@@ -15,7 +20,7 @@ const MyCartPage = () => {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await fetch('http://localhost:4000/cart');
+        const response = await fetch(`http://localhost:4000/cart/${userId}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

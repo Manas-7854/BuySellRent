@@ -31,12 +31,15 @@ function App() {
 
             {/* My Cart Page */}
             <Route path='/mycart' element ={<Cart />} />
+            <Route path='/mycart/:userId' element ={<Cart />} />
 
             {/* Orders Page */}
             <Route path='/orders' element={<OrdersPage />} />
+            <Route path='/orders/:userId' element ={<OrdersPage />} />
 
             {/* Delivery Page */}
             <Route path='/delivery' element={<DeliveryPage />} />
+            <Route path='/delivery/:userId' element ={<DeliveryPage />} />
 
           </Routes>
         </div>

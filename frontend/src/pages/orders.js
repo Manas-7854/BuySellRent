@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; // Import useParams to get the dynamic user ID from the URL
 import Item from '../components/item'; // Assuming you have the Item component
 import Navbar from '../components/navbar'; // Navbar Component
 
 const OrdersPage = () => {
+  const { userId } = useParams(); // Get the userId from the URL
+  console.log("userid", userId);
+
   const [ordersData, setOrdersData] = useState([]); // State to store fetched orders
   const [loading, setLoading] = useState(true); // State to handle loading
   const [error, setError] = useState(null); // State to handle errors
@@ -11,7 +15,7 @@ const OrdersPage = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch('http://localhost:4000/orders'); // Fetch from backend
+        const response = await fetch(`http://localhost:4000/orders/${userId}`); // Fetch from backend
         console.log("response", response);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

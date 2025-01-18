@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Sample data
-const items = [
+const users = [
     {
         id: 1,
         name: 'Manas',
@@ -51,13 +51,13 @@ const items = [
         institution: 'IIT Kharagpur',
         year: '4th Year',
     }
-    // Add more items as needed
+    // Add more users as needed
 ];
-
+ 
 // Get item by ID
 router.get('/:id', (req, res) => {
     const itemId = parseInt(req.params.id, 10);
-    const item = items.find((item) => item.id === itemId);
+    const item = users.find((item) => item.id === itemId);
 
     if (item) {
         res.json(item);
@@ -70,11 +70,11 @@ router.get('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
     console.log(req.body);
     const itemId = parseInt(req.params.id, 10);
-    const itemIndex = items.findIndex((item) => item.id === itemId);
+    const itemIndex = users.findIndex((item) => item.id === itemId);
 
     if (itemIndex !== -1) {
-        const updatedItem = { ...items[itemIndex], ...req.body }; // Update fields
-        items[itemIndex] = updatedItem; // Replace old item with updated one
+        const updatedItem = { ...users[itemIndex], ...req.body }; // Update fields
+        users[itemIndex] = updatedItem; // Replace old item with updated one
         res.json(updatedItem); // Return updated item
     } else {
         res.status(404).json({ error: 'Item not found' });
