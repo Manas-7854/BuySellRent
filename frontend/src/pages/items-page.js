@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 // Import components
 import Item from '../components/item';
 import Navbar from '../components/navbar';
 
 const ItemsPage = () => {
+  const { userId } = useParams(); // Get the user ID from the URL
   const [itemsData, setItemsData] = useState([]); // State to store fetched items
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -54,7 +56,7 @@ const ItemsPage = () => {
 
   return (
     <div className="items-page">
-      <Navbar />
+      <Navbar userId={userId}/>
       <div className="content">
         <div className="filters">
           <h2>Filters</h2>

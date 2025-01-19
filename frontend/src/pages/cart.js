@@ -76,7 +76,7 @@ const MyCartPage = () => {
 
   return (
     <div className="my-cart-page">
-      <Navbar />
+      <Navbar userId={userId}/>
       <div className="cart-content">
         <h2>My Cart</h2>
         {loading ? (

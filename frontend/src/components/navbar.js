@@ -1,33 +1,33 @@
 
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ userId }) => {
   return (
     <nav style={styles.navbar}>
       <div style={styles.logo}>MyApp</div>
       <ul style={styles.navLinks}>
         <li>
-          <Link to="/" style={styles.link}>
+          <Link to={`/home/${userId}`} style={styles.link}>
             Home
           </Link>
         </li>
         <li>
-          <Link to="/items" style={styles.link}>
+          <Link to={`/items/${userId}`} style={styles.link}>
             Items
           </Link>
         </li>
         <li>
-          <Link to="/mycart" style={styles.link}>
+          <Link to={`/mycart/${userId}`} style={styles.link}>
             Cart
           </Link>
         </li>
         <li>
-          <Link to="/orders" style={styles.link}>
+          <Link to={`/orders/${userId}`} style={styles.link}>
             Orders
           </Link>
         </li>
         <li>
-          <Link to="/delivery" style={styles.link}>
+          <Link to={`/delivery/${userId}`} style={styles.link}>
             Delivery
           </Link>
         </li>

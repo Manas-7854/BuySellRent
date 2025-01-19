@@ -39,7 +39,7 @@ const OrdersPage = () => {
 
   return (
     <div className="orders-page">
-      <Navbar />
+      <Navbar userId={userId}/>
       <h2>Your Orders</h2>
 
       {loading ? (

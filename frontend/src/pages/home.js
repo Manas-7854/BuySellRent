@@ -31,11 +31,8 @@ const Home = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        console.log("flag 1")
         const response = await fetch(`http://localhost:4000/home/${userId}`);
-        console.log("flag 2")
         const data = await response.json();
-        console.log("flag 3")
 
         if (response.ok) {
           setUserDetails(data); // Update state with fetched user data
@@ -77,7 +74,7 @@ const Home = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar userId={userId}/>
       <h1>Your Details</h1>
       <p>Name: {userDetails.name}</p>
       <p>Age: {userDetails.age}</p>

@@ -74,7 +74,7 @@ const DeliveryPage = () => {
 
   return (
     <div className="delivery-page">
-      <Navbar />
+      <Navbar userId={userId}/>
       <h2>Items to Deliver</h2>
 
       {loading ? (

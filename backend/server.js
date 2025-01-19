@@ -4,9 +4,12 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
+app.use(express.json());
+
 const PORT = 4000;
 
 // import routes 
+const loginRoutes = require('./routes/login');
 const itemsRoutes = require('./routes/items');
 const cartRoutes = require('./routes/cart');
 const ordersRoutes = require('./routes/orders');
@@ -19,6 +22,8 @@ const homeRoutes = require('./routes/home');
 app.use(cors());
 
 // Use the routes
+
+app.use("/login", loginRoutes)
 
 app.use('/items', itemsRoutes);
 
