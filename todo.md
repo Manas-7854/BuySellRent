@@ -9,10 +9,10 @@
 
 
 # TODO :
+ - make a registration page and let it add new users
+ - make a add item page
 
-
- - every order and item should have a sellers id as well and order once placed will get buyers id
- - create the database and connect the everything with it
- - create a registration page
- - implement otp
- - implement session
+ - otp functionality
+ - cas login
+ - support functionality
+ 
