@@ -106,7 +106,7 @@ const ItemsPage = () => {
             ) : error ? (
               <p>Error: {error}</p>
             ) : filteredItems.length > 0 ? (
-              filteredItems.map((item) => <Item key={item.id} item={item} />)
+              filteredItems.map((item) => <Item key={item.id} item={item} userId={userId}/>)
             ) : (
               <p>No items found</p>
             )}

@@ -29,7 +29,7 @@ function App() {
             <Route path='/items/:userId' element={<ItemsPage />} />
 
             {/* Single Item Page */}
-            <Route path="/items/:id" element={<Item />} />
+            <Route path="/item/:itemId/:userId" element={<Item />} />
 
             {/* My Cart Page */}
             <Route path='/mycart' element ={<Cart />} />

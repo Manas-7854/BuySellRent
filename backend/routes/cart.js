@@ -163,4 +163,29 @@ router.get('/:userid', (req, res) => {
   }
 });
 
+// Add item to cart
+router.post('/:userID', (req, res) => {
+  const { item } = req.body;
+  itemId = item.id;
+  console.log("item Id", item.id);
+  const userId = parseInt(req.params.userID, 10);
+  console.log("userID", userId);
+
+  // Check if the item exists in the cartItems array
+  const itemExists = cartItems.some(item => (item.id === itemId) && (item.userId === userId));
+  console.log("itemExists", itemExists);
+  if (itemExists) {
+    res.status(200).json({ message: 'Item already exists in cart' });
+  } 
+  else {
+
+    // add item to that users cart
+    res.status(200).json({ message: 'Item added to cart'});
+  
+  }
+});
+
+// remove item from cart
+// if single item deletion is not possible the clear the whole cart
+
 module.exports = router;

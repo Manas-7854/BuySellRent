@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 // Pages & Components
 import Navbar from '../components/navbar';
 
 const Item = () => {
-  const { id } = useParams(); // Get the item ID from the URL
+  const { itemId, userId } = useParams(); // Get the item ID from the URL
+  console.log(itemId);
+  console.log(userId);
   const [item, setItem] = useState(null); // State to store the fetched item
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
@@ -14,8 +17,8 @@ const Item = () => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        console.log(`http://localhost:4000/item/${id}`);
-        const response = await fetch(`http://localhost:4000/item/${id}`);
+        console.log(`http://localhost:4000/item/${itemId}`);
+        const response = await fetch(`http://localhost:4000/item/${itemId}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -29,12 +32,20 @@ const Item = () => {
     };
 
     fetchItem();
-  }, [id]);
+  }, [itemId]);
+
+  const addToCart = async (e) => {
+  e.preventDefault();
+  const response = await axios.post(`http://localhost:4000/cart/${userId}`, { item });
+  if (response.status === 200) {
+    alert(`${response.data.message}`);
+  };
+  };
 
   if (loading) {
     return (
       <div className="item-page">
-        <Navbar />
+        <Navbar userId={userId}/>
         <p>Loading item details...</p>
       </div>
     );
@@ -43,7 +54,7 @@ const Item = () => {
   if (error) {
     return (
       <div className="item-page">
-        <Navbar />
+        <Navbar userId={userId}/>
         <p>Error: {error}</p>
       </div>
     );
@@ -52,7 +63,7 @@ const Item = () => {
   if (!item) {
     return (
       <div className="item-page">
-        <Navbar />
+        <Navbar userId={userId}/>
         <p>Item not found!</p>
       </div>
     );
@@ -60,7 +71,7 @@ const Item = () => {
 
   return (
     <div className="item-page">
-      <Navbar />
+      <Navbar userId={userId}/>
       <h2>Item Details</h2>
       <div className="item-details">
         <img src={item.image} alt={item.description} style={{ width: '300px', height: '300px' }} />
@@ -75,7 +86,7 @@ const Item = () => {
           <p>
             <strong>Selling Price:</strong> ${item.sellingPrice}
           </p>
-          <button onClick={() => alert('Item added to cart!')}>Add to Cart</button>
+          <button onClick={addToCart}>Add to Cart</button>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams to get the dynamic user ID from the URL
+import axios from 'axios';
 
 // Import the Item component
 import Item from '../components/item';
@@ -37,19 +38,8 @@ const MyCartPage = () => {
   }, []);
 
   // Function to remove an item from the cart
-  const removeItem = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:4000/cart/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
-        throw new Error('Failed to remove item');
-      }
-      const updatedCart = cartItems.filter((item) => item.id !== id);
-      setCartItems(updatedCart);
-    } catch (err) {
-      console.error('Error removing item:', err.message);
-    }
+  const removeItem = async (itemId) => {
+    // send request to remove item from cart 
   };
 
   // Calculate the total price of items in the cart
@@ -89,7 +79,7 @@ const MyCartPage = () => {
               {cartItems.length > 0 ? (
                 cartItems.map((item) => (
                   <div key={item.id} className="cart-item">
-                    <Item item={item} />
+                    <Item item={item} userId={userId}/>
                     {/* Remove Button */}
                     <button className="remove-item-button" onClick={() => removeItem(item.id)}>
                       Remove

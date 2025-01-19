@@ -9,15 +9,10 @@
 
 
 # TODO :
- - Make the user dashboard page (done)
- - Make the items page (done)
- - make my cart page (done)
- - make order history (done)
- - make delivery page (done)
- - add new item page 
- - add a page for showing items that the user has put up for selling
 
- - create login page and use jwt or session to keep track of that user and show everything with respect to that user
- - for now just create a users const in server for login verification
 
- - actually create and connect with mongo and work with that data
+ - every order and item should have a sellers id as well and order once placed will get buyers id
+ - create the database and connect the everything with it
+ - create a registration page
+ - implement otp
+ - implement session

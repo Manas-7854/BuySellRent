@@ -36,6 +36,8 @@ const DeliveryPage = () => {
     fetchDeliveryItems();
   }, []);
 
+  const deliveryOrders = itemsToDeliver.filter((item) => item.sellerId === parseInt(userId) && item.status === 'pending');
+
   // Handle OTP input change for each item
   const handleOtpChange = (itemId, value) => {
     setOtpMap((prevOtpMap) => ({
@@ -46,30 +48,31 @@ const DeliveryPage = () => {
 
   // Handle OTP verification
   const handleOtpVerification = async (itemId, enteredOtp) => {
-    try {
-      const response = await fetch(`http://localhost:4000/delivery/${itemId}/verify`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ otp: enteredOtp }),
-      });
+    console.log("the otp is correct")
+    // try {
+    //   const response = await fetch(`http://localhost:4000/delivery/${itemId}/verify`, {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ otp: enteredOtp }),
+    //   });
 
-      if (!response.ok) {
-        throw new Error('OTP verification failed');
-      }
+    //   if (!response.ok) {
+    //     throw new Error('OTP verification failed');
+    //   }
 
-      const result = await response.json();
-      if (result.success) {
-        // Remove the item from the list when OTP is correct
-        const updatedItems = itemsToDeliver.filter((item) => item.id !== itemId);
-        setItemsToDeliver(updatedItems);
-        alert('Transaction completed successfully!');
-      } else {
-        alert('Incorrect OTP');
-      }
-    } catch (err) {
-      console.error('Error verifying OTP:', err.message);
-      alert('Error verifying OTP');
-    }
+    //   const result = await response.json();
+    //   if (result.success) {
+    //     // Remove the item from the list when OTP is correct
+    //     const updatedItems = itemsToDeliver.filter((item) => item.id !== itemId);
+    //     setItemsToDeliver(updatedItems);
+    //     alert('Transaction completed successfully!');
+    //   } else {
+    //     alert('Incorrect OTP');
+    //   }
+    // } catch (err) {
+    //   console.error('Error verifying OTP:', err.message);
+    //   alert('Error verifying OTP');
+    // }
   };
 
   return (
@@ -83,8 +86,8 @@ const DeliveryPage = () => {
         <p>Error: {error}</p>
       ) : (
         <div className="delivery-list">
-          {itemsToDeliver.length > 0 ? (
-            itemsToDeliver.map((item) => (
+          {deliveryOrders.length > 0 ? (
+            deliveryOrders.map((item) => (
               <div key={item.id} className="delivery-item">
                 <Item item={item.item} />
 

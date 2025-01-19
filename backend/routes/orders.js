@@ -3,7 +3,6 @@ const router = express.Router();
 
 const orderItems = [
   {
-    userId: 1,
     id: 1,
     item: {
       id: 13,
@@ -13,11 +12,12 @@ const orderItems = [
       sellingPrice: 680,
       category: 'Clothing',
     },
-    orderType: 'bought', // or 'sold' or 'pending'
-    otp: null, // OTP is null for bought and sold orders
+    buyerId: 1,
+    sellerId: 2,
+    status: 'completed',
+    otp: null,
   },
   {
-    userId: 2,
     id: 2,
     item: {
       id: 14,
@@ -27,11 +27,12 @@ const orderItems = [
       sellingPrice: 1150,
       category: 'Electronics',
     },
-    orderType: 'pending',
-    otp: '123456', // OTP is present for pending orders
+    buyerId: 2,
+    sellerId: 1,
+    status: 'pending',
+    otp: '123456',
   },
   {
-    userId: 3,
     id: 3,
     item: {
       id: 15,
@@ -41,11 +42,12 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'sold',
+    buyerId: 3,
+    sellerId: 1,
+    status: 'completed',
     otp: null,
   },
   {
-    userId: 1,
     id: 4,
     item: {
       id: 5,
@@ -55,11 +57,12 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'pending',
+    buyerId: 1,
+    sellerId: 2,
+    status: 'pending',
     otp: '232345',
   },
   {
-    userId: 2,
     id: 5,
     item: {
       id: 25,
@@ -69,11 +72,12 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'sold',
+    buyerId: 2,
+    sellerId: 3,
+    status: 'completed',
     otp: null,
   },
   {
-    userId: 3,
     id: 6,
     item: {
       id: 1,
@@ -83,11 +87,12 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'bought',
+    buyerId: 3,
+    sellerId: 1,
+    status: 'completed',
     otp: null,
   },
   {
-    userId: 2,
     id: 7,
     item: {
       id: 3,
@@ -97,11 +102,12 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'sold',
+    buyerId: 1,
+    sellerId: 2,
+    status: 'completed',
     otp: null,
   },
   {
-    userId: 1,
     id: 8,
     item: {
       id: 2,
@@ -111,11 +117,12 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'bought',
+    buyerId: 2,
+    sellerId: 1,
+    status: 'completed',
     otp: null,
   },
   {
-    userId: 3,
     id: 9,
     item: {
       id: 115,
@@ -125,11 +132,12 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'pending',
+    buyerId: 3,
+    sellerId: 2,
+    status: 'pending',
     otp: '898989',
   },
   {
-    userId: 2,
     id: 10,
     item: {
       id: 2,
@@ -139,11 +147,12 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'bought',
+    buyerId: 1,
+    sellerId: 2,
+    status: 'completed',
     otp: null,
   },
   {
-    userId: 1,
     id: 11,
     item: {
       id: 2,
@@ -153,11 +162,12 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'bought',
+    buyerId: 1,
+    sellerId: 3,
+    status: 'completed',
     otp: null,
   },
   {
-    userId: 3,
     id: 12,
     item: {
       id: 2,
@@ -167,11 +177,12 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'bought',
+    buyerId: 3,
+    sellerId: 2,
+    status: 'completed',
     otp: null,
   },
   {
-    userId: 2,
     id: 13,
     item: {
       id: 2,
@@ -181,11 +192,12 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'bought',
+    buyerId: 2,
+    sellerId: 3,
+    status: 'completed',
     otp: null,
   },
   {
-    userId: 1,
     id: 14,
     item: {
       id: 2,
@@ -195,11 +207,12 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'bought',
+    buyerId: 1,
+    sellerId: 2,
+    status: 'completed',
     otp: null,
   },
   {
-    userId: 3,
     id: 15,
     item: {
       id: 2,
@@ -209,11 +222,12 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'bought',
+    buyerId: 3,
+    sellerId: 2,
+    status: 'completed',
     otp: null,
   },
   {
-    userId: 2,
     id: 16,
     item: {
       id: 2,
@@ -223,16 +237,18 @@ const orderItems = [
       sellingPrice: 800,
       category: 'Clothing',
     },
-    orderType: 'bought',
+    buyerId: 1,
+    sellerId: 3,
+    status: 'completed',
     otp: null,
   },
   // More orders here...
 ];
 
-// get order items by user id
+
 router.get('/:userid', (req, res) => {
   const userId = parseInt(req.params.userid);
-  const userOrders = orderItems.filter((order) => order.userId === userId);
+  const userOrders = orderItems.filter((order) => order.buyerId === userId || order.sellerId === userId);
   
   if (userOrders.length > 0) {
     res.json(userOrders)

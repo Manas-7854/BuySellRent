@@ -5,7 +5,9 @@ import Navbar from '../components/navbar'; // Navbar Component
 
 const OrdersPage = () => {
   const { userId } = useParams(); // Get the userId from the URL
-  console.log("userid", userId);
+  console.log("user", userId); 
+  console.log(typeof userId);
+
 
   const [ordersData, setOrdersData] = useState([]); // State to store fetched orders
   const [loading, setLoading] = useState(true); // State to handle loading
@@ -33,9 +35,9 @@ const OrdersPage = () => {
   }, []);
 
   // Filter orders into categories
-  const boughtOrders = ordersData.filter((order) => order.orderType === 'bought');
-  const soldOrders = ordersData.filter((order) => order.orderType === 'sold');
-  const pendingOrders = ordersData.filter((order) => order.orderType === 'pending');
+  const boughtOrders = ordersData.filter((order) => order.status === 'completed' || order.buyerId === parseInt(userId));
+  const soldOrders = ordersData.filter((order) => order.status === 'completed' && order.sellerId === parseInt(userId));
+  const pendingOrders = ordersData.filter((order) => order.status === 'pending' && order.buyerId === parseInt(userId));
 
   return (
     <div className="orders-page">
