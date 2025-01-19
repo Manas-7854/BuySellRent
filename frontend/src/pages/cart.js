@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'; // Import useParams to get the dyn
 import axios from 'axios';
 
 // Import the Item component
-import Item from '../components/item';
+import CartItem from '../components/cartitem';
 // Import the Navbar component
 import Navbar from '../components/navbar';
 
@@ -43,7 +43,7 @@ const MyCartPage = () => {
   };
 
   // Calculate the total price of items in the cart
-  const totalPrice = cartItems.reduce((acc, item) => acc + item.sellingPrice, 0);
+  const totalPrice = cartItems.reduce((acc, order) => acc + order.item_sellingPrice, 0);
 
   // Function to place an order
   const placeOrder = async () => {
@@ -77,11 +77,11 @@ const MyCartPage = () => {
           <>
             <div className="cart-items">
               {cartItems.length > 0 ? (
-                cartItems.map((item) => (
-                  <div key={item.id} className="cart-item">
-                    <Item item={item} userId={userId}/>
+                cartItems.map((order) => (
+                  <div key={order.item_id} className="cart-item">
+                    <CartItem order={order} userId={userId}/>
                     {/* Remove Button */}
-                    <button className="remove-item-button" onClick={() => removeItem(item.id)}>
+                    <button className="remove-item-button" onClick={() => removeItem(order.item_id)}>
                       Remove
                     </button>
                   </div>
