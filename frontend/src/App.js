@@ -10,6 +10,7 @@ import OrdersPage from './pages/orders';
 import DeliveryPage from './pages/delivery';
 import Login from './pages/login';
 import Register from './pages/register';
+import AddItem from './pages/add-item';
 
 function App() {
   return (
@@ -45,6 +46,9 @@ function App() {
             {/* Delivery Page */}
             <Route path='/delivery' element={<DeliveryPage />} />
             <Route path='/delivery/:userId' element ={<DeliveryPage />} />
+
+            {/* Add Items Page */}
+            <Route path='/add-item/:userId' element={<AddItem />} />
 
           </Routes>
         </div>

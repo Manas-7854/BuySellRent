@@ -9,8 +9,9 @@
 
 
 # TODO :
- - make a registration page and let it add new users
- - make a add item page
+    - make the items page works and the single item page work
+    - figure out what to do next
+    
 
  - otp functionality
  - cas login

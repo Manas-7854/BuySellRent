@@ -29,8 +29,9 @@ const deliveryRoutes = require('./routes/delivery');
 const itemRoutes = require('./routes/item');
 const homeRoutes = require('./routes/home');
 const registerRoutes = require('./routes/register');
+const additemRoutes = require('./routes/add-item');
 
-// import models
+// import models 
 const User = require('./models/user');
 const Order = require('./models/order');
 const Item = require('./models/item');
@@ -55,6 +56,8 @@ app.use('/delivery', deliveryRoutes);
 app.use('/item', itemRoutes);
 
 app.use('/home', homeRoutes);
+
+app.use("/add-item", additemRoutes);
 
 
 // dummy routes
@@ -85,25 +88,25 @@ app.get('/add-order', (req, res) => {
     });
 });
 
-// add item
-app.get('/add-item', (req, res) => {
+// // add item
+// app.get('/add-item', (req, res) => {
 
-  const item = new Item({
-    sellerId: '678cffda9c8f1bcd30259e0c',
-    description: 'Item 1 description...',
-    originalPrice: 100,
-    sellingPrice: 80,
-    category: 'Electronics',
-  })
-  item.save()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+//   const item = new Item({
+//     sellerId: '678cffda9c8f1bcd30259e0c',
+//     description: 'Item 1 description...',
+//     originalPrice: 100,
+//     sellingPrice: 80,
+//     category: 'Electronics',
+//   })
+//   item.save()
+//     .then((result) => {
+//       res.send(result);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
 
-});
+// });
 
 // get user by id
 app.get('/get-user/:id', (req, res) => {

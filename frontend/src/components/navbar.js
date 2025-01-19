@@ -6,6 +6,11 @@ const Navbar = ({ userId }) => {
     <nav style={styles.navbar}>
       <div style={styles.logo}>MyApp</div>
       <ul style={styles.navLinks}>
+      <li>
+          <Link to={`/add-item/${userId}`} style={styles.link}>
+            Add Item
+          </Link>
+        </li>     
         <li>
           <Link to={`/home/${userId}`} style={styles.link}>
             Home
