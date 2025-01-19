@@ -7,6 +7,7 @@ import Navbar from '../components/navbar';
 
 const ItemsPage = () => {
   const { userId } = useParams(); // Get the user ID from the URL
+
   const [itemsData, setItemsData] = useState([]); // State to store fetched items
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -19,7 +20,7 @@ const ItemsPage = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('http://localhost:4000/items'); // Fetch from backend
+        const response = await fetch(`http://localhost:4000/items/${userId}`); // Fetch from backend
         console.log("response", response);
         // console.log("response", response.json());
 
@@ -31,7 +32,7 @@ const ItemsPage = () => {
         }
         console.log("flag 1");
         const data = await response.json();
-        console.log("flag 2");
+
 
         console.log('Fetched items:', data); // Log the fetched items
         setItemsData(data); // Update state with fetched items
@@ -45,6 +46,7 @@ const ItemsPage = () => {
     fetchItems();
   }, []);
 
+  console.log("itemsData", itemsData);
   // Filter items based on search query, selected category, and price range
   const filteredItems = itemsData.filter((item) => {
     const matchesSearch = item.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -106,7 +108,7 @@ const ItemsPage = () => {
             ) : error ? (
               <p>Error: {error}</p>
             ) : filteredItems.length > 0 ? (
-              filteredItems.map((item) => <Item key={item.id} item={item} userId={userId}/>)
+              filteredItems.map((item) => <Item key={item._id} item={item} userId={userId}/>)
             ) : (
               <p>No items found</p>
             )}

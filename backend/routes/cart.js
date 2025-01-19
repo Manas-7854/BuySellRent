@@ -24,7 +24,7 @@ router.post('/:userid', (req, res) => {
   // Update the status of all cart items to 'completed'
   Order.updateMany(
     { buyerId: userId, status: 'inCart' },
-    { status: 'pending' },
+    { status: 'pending', otp:'1234' },
   ).then(() => res.sendStatus(200));
 });
 
