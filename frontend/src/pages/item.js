@@ -17,7 +17,6 @@ const Item = () => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        console.log(`http://localhost:4000/item/${itemId}`);
         const response = await fetch(`http://localhost:4000/item/${itemId}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -36,7 +35,7 @@ const Item = () => {
 
   const addToCart = async (e) => {
   e.preventDefault();
-  const response = await axios.post(`http://localhost:4000/cart/${userId}`, { item });
+  const response = await axios.post(`http://localhost:4000/item/${itemId}`, { userId, item });
   if (response.status === 200) {
     alert(`${response.data.message}`);
   };

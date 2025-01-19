@@ -31,11 +31,6 @@ const homeRoutes = require('./routes/home');
 const registerRoutes = require('./routes/register');
 const additemRoutes = require('./routes/add-item');
 
-// import models 
-const User = require('./models/user');
-const Order = require('./models/order');
-const Item = require('./models/item');
-
 // Use CORS to allow cross-origin requests
 app.use(cors());
 app.use(express.json());
@@ -62,31 +57,31 @@ app.use("/add-item", additemRoutes);
 
 // dummy routes
 
-// add order
-app.get('/add-order', (req, res) => {
+// // add order
+// app.get('/add-order', (req, res) => {
 
-  const order = new Order({
-    item: {
-      id: 13,
-      image: 'path_to_image13.jpg',
-      description: 'Item 13 description...',
-      originalPrice: 700,
-      sellingPrice: 680,
-      category: 'Clothing',
-    },
-    buyerId: '678cfcac40f555e42aea4d96',
-    sellerId: '678cffda9c8f1bcd30259e0c',
-    status: 'completed',
-    otp: null,
-  })
-  order.save()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+//   const order = new Order({
+//     item: {
+//       id: 13,
+//       image: 'path_to_image13.jpg',
+//       description: 'Item 13 description...',
+//       originalPrice: 700,
+//       sellingPrice: 680,
+//       category: 'Clothing',
+//     },
+//     buyerId: '678cfcac40f555e42aea4d96',
+//     sellerId: '678cffda9c8f1bcd30259e0c',
+//     status: 'completed',
+//     otp: null,
+//   })
+//   order.save()
+//     .then((result) => {
+//       res.send(result);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// });
 
 // // add item
 // app.get('/add-item', (req, res) => {
@@ -109,8 +104,3 @@ app.get('/add-order', (req, res) => {
 // });
 
 // get user by id
-app.get('/get-user/:id', (req, res) => {
-
-  const userId = req.params.id;
-  User.findById(userId).then((result) => {res.send(result)}).catch((err) => {console.log(err)});
-});

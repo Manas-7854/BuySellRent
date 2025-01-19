@@ -5,15 +5,14 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
 
-    item:
-    {
-        id: Number,
-        image: String,
-        description: String,
-        originalPrice: Number,
-        sellingPrice: Number,
-        category: String
-    },
+
+    item_id: String,
+    item_image: String,
+    item_description: String,
+    item_originalPrice: Number,
+    item_sellingPrice: Number,
+    item_category: String,
+
     buyerId: String,
     sellerId: String,
     status: String,
