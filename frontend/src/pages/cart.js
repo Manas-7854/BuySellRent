@@ -37,30 +37,23 @@ const MyCartPage = () => {
     fetchCartItems();
   }, []);
 
-  // Function to remove an item from the cart
-  const removeItem = async (itemId) => {
-    // send request to remove item from cart 
-  };
 
   // Calculate the total price of items in the cart
   const totalPrice = cartItems.reduce((acc, order) => acc + order.item_sellingPrice, 0);
 
   // Function to place an order
   const placeOrder = async () => {
-    try {
-      const response = await fetch('http://localhost:4000/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(cartItems),
-      });
-      if (!response.ok) {
-        throw new Error('Failed to place order');
-      }
-      const result = await response.json();
-      console.log('Order placed successfully:', result);
-      setCartItems([]); // Clear the cart after placing the order
-    } catch (err) {
-      console.error('Error placing order:', err.message);
+    console.log(cartItems);
+
+    const response = await axios.post(`http://localhost:4000/cart/${userId}`, {cartItems});
+
+    if (response.status === 200) {
+      // Order placed successfully
+      console.log("Order placed successfully");
+      // Redirect to the orders page
+    } else {
+      // Order failed
+      console.log("Order failed");
     }
   };
 
@@ -80,10 +73,6 @@ const MyCartPage = () => {
                 cartItems.map((order) => (
                   <div key={order.item_id} className="cart-item">
                     <CartItem order={order} userId={userId}/>
-                    {/* Remove Button */}
-                    <button className="remove-item-button" onClick={() => removeItem(order.item_id)}>
-                      Remove
-                    </button>
                   </div>
                 ))
               ) : (

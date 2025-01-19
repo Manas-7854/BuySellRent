@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams to get the dynamic user ID from the URL
-import Item from '../components/item'; // Assuming you have the Item component
 import Navbar from '../components/navbar'; // Navbar Component
+import CartItem from '../components/cartitem'; // CartItem Component
 
 const OrdersPage = () => {
   const { userId } = useParams(); // Get the userId from the URL
@@ -34,29 +34,27 @@ const OrdersPage = () => {
     fetchOrders();
   }, []);
 
+  console.log("ordersData", ordersData);
   // Filter orders into categories
-  const boughtOrders = ordersData.filter((order) => order.status === 'completed' || order.buyerId === parseInt(userId));
-  const soldOrders = ordersData.filter((order) => order.status === 'completed' && order.sellerId === parseInt(userId));
-  const pendingOrders = ordersData.filter((order) => order.status === 'pending' && order.buyerId === parseInt(userId));
+  const boughtOrders = ordersData.filter((order) => order.status === 'completed' || order.buyerId === userId);
+  const soldOrders = ordersData.filter((order) => order.status === 'completed' && order.sellerId === userId);
+  const pendingOrders = ordersData.filter((order) => order.status === 'pending' && order.buyerId === userId);
+
+
 
   return (
     <div className="orders-page">
       <Navbar userId={userId}/>
       <h2>Your Orders</h2>
 
-      {loading ? (
-        <p>Loading orders...</p>
-      ) : error ? (
-        <p>Error: {error}</p>
-      ) : (
-        <>
+
           <div className="orders-section">
             <h3>Bought Orders</h3>
             <div className="orders-list">
               {boughtOrders.length > 0 ? (
                 boughtOrders.map((order) => (
-                  <div key={order.id} className="order-item bought-order">
-                    <Item item={order.item} />
+                  <div key={order._id} className="order-item bought-order">
+                    <CartItem order={order} userId={userId}/>
                   </div>
                 ))
               ) : (
@@ -70,8 +68,8 @@ const OrdersPage = () => {
             <div className="orders-list">
               {soldOrders.length > 0 ? (
                 soldOrders.map((order) => (
-                  <div key={order.id} className="order-item sold-order">
-                    <Item item={order.item} />
+                  <div key={order._id} className="order-item sold-order">
+                    <CartItem order={order} userId={userId}/>
                   </div>
                 ))
               ) : (
@@ -85,8 +83,8 @@ const OrdersPage = () => {
             <div className="orders-list">
               {pendingOrders.length > 0 ? (
                 pendingOrders.map((order) => (
-                  <div key={order.id} className="order-item pending-order">
-                    <Item item={order.item} />
+                  <div key={order._id} className="order-item pending-order">
+                    <CartItem order={order} userId={userId}/>
                     <div className="otp">
                       <p>OTP: {order.otp}</p>
                     </div>
@@ -97,8 +95,8 @@ const OrdersPage = () => {
               )}
             </div>
           </div>
-        </>
-      )}
+        
+    
     </div>
   );
 };

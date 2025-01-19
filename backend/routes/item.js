@@ -29,7 +29,6 @@ router.get('/:itemId', (req, res) => {
       const existingOrder = await Order.findOne({
         item_id : itemId,
         buyerId: userId,
-        status: 'inCart'
       });
   
       if (existingOrder) {
