@@ -9,6 +9,7 @@ import Cart from './pages/cart';
 import OrdersPage from './pages/orders';
 import DeliveryPage from './pages/delivery';
 import Login from './pages/login';
+import Register from './pages/register';
 
 function App() {
   return (
@@ -17,8 +18,10 @@ function App() {
         <div className='pages'>
           <Routes>
 
-            {/* Home Page */}
+            {/* Login Page */}
             <Route path='/login' element={<Login />} />
+            {/* Register Page */}
+            <Route path='/register' element={<Register />} />
 
             {/* Home Page */}
             <Route path='/home' element={<Home />} />

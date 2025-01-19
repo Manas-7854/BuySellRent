@@ -5,21 +5,18 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:4000/login", { username, password });
+    const response = await axios.post("http://localhost:4000/login", { email, password });
 
     if (response.status === 200) {
-      const {message, userId} = response.data;
-
-      console.log("message", message);
-      console.log("userId", userId);
-
+      const userId = response.data._id;
+      console.log("userId", userId)
       navigate(`/home/${userId}`);
     }
     else{
@@ -32,11 +29,11 @@ const Login = () => {
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
         <div>
-          <label>Username: </label>
+          <label>Email: </label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>

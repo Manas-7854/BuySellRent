@@ -77,10 +77,7 @@ const Home = () => {
       <Navbar userId={userId}/>
       <h1>Your Details</h1>
       <p>Name: {userDetails.name}</p>
-      <p>Age: {userDetails.age}</p>
-      <p>Branch: {userDetails.branch}</p>
-      <p>Institution: {userDetails.institution}</p>
-      <p>Year: {userDetails.year}</p>
+      <p>email: {userDetails.email}</p>
       
       <button onClick={() => setIsEditing(true)}>Edit Details</button>
 
@@ -98,38 +95,11 @@ const Home = () => {
               />
             </div>
             <div>
-              <label>Age:</label>
-              <input
-                type="number"
-                name="age"
-                value={editedDetails.age}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label>Branch:</label>
+              <label>Email:</label>
               <input
                 type="text"
-                name="branch"
-                value={editedDetails.branch}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label>Institution:</label>
-              <input
-                type="text"
-                name="institution"
-                value={editedDetails.institution}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label>Year:</label>
-              <input
-                type="text"
-                name="year"
-                value={editedDetails.year}
+                name="email"
+                value={editedDetails.email}
                 onChange={handleChange}
               />
             </div>

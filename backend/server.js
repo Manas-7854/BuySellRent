@@ -28,6 +28,7 @@ const ordersRoutes = require('./routes/orders');
 const deliveryRoutes = require('./routes/delivery');
 const itemRoutes = require('./routes/item');
 const homeRoutes = require('./routes/home');
+const registerRoutes = require('./routes/register');
 
 // import models
 const User = require('./models/user');
@@ -41,6 +42,7 @@ app.use(express.json());
 // Use the routes
 
 app.use("/login", loginRoutes)
+app.use('/register', registerRoutes);
 
 app.use('/items', itemsRoutes);
 
@@ -56,22 +58,6 @@ app.use('/home', homeRoutes);
 
 
 // dummy routes
-
-// add-user
-app.get('/add-user', (req, res) => {
-  const user = new User({
-    name: 'Manas Agrawal',
-    email: 'manas@gmail.com',
-    password: 'manas'});
-
-    user.save()
-      .then((result) => {
-        res.send(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-});
 
 // add order
 app.get('/add-order', (req, res) => {
@@ -117,4 +103,11 @@ app.get('/add-item', (req, res) => {
       console.log(err);
     });
 
+});
+
+// get user by id
+app.get('/get-user/:id', (req, res) => {
+
+  const userId = req.params.id;
+  User.findById(userId).then((result) => {res.send(result)}).catch((err) => {console.log(err)});
 });

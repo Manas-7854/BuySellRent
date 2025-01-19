@@ -3,32 +3,29 @@
 const express = require("express");
 const router = express.Router();
 
-
-// List of valid usernames and passwords
-const validUsers = [
-  { userId : '1', username: "mana", password: "mana" },
-  { userId : '2', username: "john", password: "1234" },
-  { userId : '3', username: "jane", password: "abcd" },
-];
+// import models
+const User = require("../models/user");
 
 // POST route to handle login
 router.post("/", (req, res) => {
-  const { username, password } = req.body;
-  console.log("username:", username);
+  const { email, password } = req.body;
+  console.log("username:", email);
   console.log("password:", password);
   
-  // Check if the provided credentials exist in the validUsers array
-  const userExists = validUsers.some(
-    (user) => user.username === username && user.password === password
-  );
+  User.findOne({ email: email, password: password })
+  .then((user) => {
+      if (user) {
+          res.json(user); // Send the user data as JSON
+      } else {
+          res.status(404).json({ message: 'User not found or credentials are incorrect' }); // Handle not found case
+      }
+  })
+  .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: 'An error occurred while fetching the user' }); // Handle server error
+  });
 
-  if (userExists) {
-    console.log("login successful");
-    res.status(200).json({ message: "Login successful!", userId: validUsers.find(user => user.username === username).userId });
-  } else {
-    console.log("login failed");
-    res.status(401).json({ error: "Invalid username or password" });
-  }
+
 });
 
 module.exports = router;
