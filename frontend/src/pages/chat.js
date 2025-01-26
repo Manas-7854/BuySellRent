@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 import Navbar from "../components/navbar";
+const token = localStorage.getItem("token");
+
 
 function ChatPage() {
   const { userId } = useParams();
@@ -11,9 +14,13 @@ function ChatPage() {
     { role: "model", text: "Great to meet you. What would you like to know?" },
   ]);
   const [serverMessage, setServerMessage] = useState(""); // New state for server message
-
+  const navigate = useNavigate();
   // Fetch initial data from the server when the component mounts
   useEffect(() => {
+    if (!token) {
+      // If no token, redirect to login page
+      navigate(`/login`);
+    }
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:4000/chat"); // Assuming your server has a reset endpoint

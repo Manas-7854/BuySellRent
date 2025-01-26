@@ -1,6 +1,6 @@
 // middleware/auth.js
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "your-secret-key"; // Use the same secret key as in login.js
+const JWT_SECRET = "laddu"; // Use the same secret key as in login.js
 
 const authMiddleware = (req, res, next) => {
   const token = req.header("Authorization")?.replace("Bearer ", "");

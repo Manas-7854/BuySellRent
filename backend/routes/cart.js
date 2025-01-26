@@ -4,8 +4,12 @@ const router = express.Router();
 // import models
 const Order = require('../models/order');
 
+// import middleware
+const authMiddleware = require("../middleware/auth");
+
 // Get cart items by userId
-router.get('/:userid', (req, res) => {
+router.get('/:userid',authMiddleware,  (req, res) => {
+
   const userId = req.params.userid; // Get the userId from the route parameter
 
   Order.find(

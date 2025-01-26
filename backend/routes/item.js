@@ -6,8 +6,11 @@ const Order = require('../models/order');
 const Item = require('../models/item');
 const User = require('../models/user');
 
+// import middleware
+const authMiddleware = require('../middleware/auth');
+
 // Get item by ID
-router.get('/:itemId', (req, res) => {
+router.get('/:itemId',authMiddleware,  (req, res) => {
     const itemId = req.params.itemId;
 
     Item.findById(itemId)

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-// Pages & Components
 import Navbar from '../components/navbar';
+const token = localStorage.getItem('token');
+// Pages & Components
 
 const Item = () => {
   const { itemId, userId } = useParams(); // Get the item ID from the URL
@@ -11,11 +12,21 @@ const Item = () => {
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
 
+  const navigate = useNavigate();
   // Fetch item details from the backend
   useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    };
     const fetchItem = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/item/${itemId}`);
+        const response = await fetch(`http://localhost:4000/item/${itemId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

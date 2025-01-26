@@ -4,7 +4,10 @@ const router = express.Router();
 // import models
 const Order = require('../models/order');
 
-router.get('/:userid', async (req, res) => {
+// import middleware
+const authMiddleware = require('../middleware/auth');
+
+router.get('/:userid', authMiddleware, async (req, res) => {
   const userId = parseInt(req.params.userid);
 
     // Find orders where userId matches buyerId or sellerId, and status is pending or completed

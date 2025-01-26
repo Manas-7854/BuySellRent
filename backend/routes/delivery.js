@@ -5,6 +5,9 @@ const router = express.Router();
 const Order = require('../models/order');
 const Item = require('../models/item');
 
+// import middleware
+// const authMiddleware = require("../middleware/auth");
+
 // Get delivery items for a specific user
 router.get('/:userId', (req, res) => {
   // get the user id from url

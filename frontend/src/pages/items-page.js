@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 // Import components
 import Item from '../components/item';
 import Navbar from '../components/navbar';
 
+const token = localStorage.getItem("token");
+
 const ItemsPage = () => {
   const { userId } = useParams(); // Get the user ID from the URL
+  const navigate = useNavigate(); // Get the navigate function from the router
 
   const [itemsData, setItemsData] = useState([]); // State to store fetched items
   const [searchQuery, setSearchQuery] = useState('');
@@ -18,9 +21,20 @@ const ItemsPage = () => {
 
   // Fetch items from the backend
   useEffect(() => {
+    if (!token) {
+      // If no token, redirect to login page
+      navigate(`/login`);
+    }
+
     const fetchItems = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/items/${userId}`); // Fetch from backend
+        const response = await fetch(`http://localhost:4000/items/${userId}`, 
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        ); // Fetch from backend
         console.log("response", response);
         // console.log("response", response.json());
 

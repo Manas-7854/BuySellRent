@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; 
+import { useParams, useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 
 import CartItem from '../components/cartitem';
 import Navbar from '../components/navbar';
+
+const token = localStorage.getItem("token");
 
 const MyCartPage = () => {
   const { userId } = useParams();
@@ -13,10 +15,21 @@ const MyCartPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate(); // Get the navigate function from the router
+
   useEffect(() => {
+    if (!token) {
+      // If no token, redirect to login page
+      navigate(`/login`);
+    }
     const fetchCartItems = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/cart/${userId}`);
+        const response = await fetch(`http://localhost:4000/cart/${userId}`, 
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+      });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

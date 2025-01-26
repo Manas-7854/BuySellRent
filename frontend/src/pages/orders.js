@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams to get the dynamic user ID from the URL
+import { useParams, useNavigate } from 'react-router-dom'; // Import useParams to get the dynamic user ID from the URL
 import Navbar from '../components/navbar'; // Navbar Component
 import CartItem from '../components/cartitem'; // CartItem Component
+
+const token = localStorage.getItem("token");
 
 const OrdersPage = () => {
   const { userId } = useParams(); // Get the userId from the URL
   console.log("user", userId); 
   console.log(typeof userId);
+  const navigate = useNavigate(); // Get the navigate function from the router
 
 
   const [ordersData, setOrdersData] = useState([]); // State to store fetched orders
@@ -15,9 +18,19 @@ const OrdersPage = () => {
 
   // Fetch orders from the backend
   useEffect(() => {
+    if (!token) {
+      // If no token, redirect to login page
+      navigate(`/login`);
+    }
     const fetchOrders = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/orders/${userId}`); // Fetch from backend
+        const response = await fetch(`http://localhost:4000/orders/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        ); // Fetch from backend
         console.log("response", response);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
