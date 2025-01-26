@@ -12,14 +12,13 @@
     - implement otp encryption 
     - implement session/jwt
     - logout functionality
-    - add the remove functionality from cart do this by changing post route for placing orders from /cart/post to /orders/post and the use the /cart/post to remove items from the cart
     - make user details editable
     - add vendor name to the items 
+    - in support refresh the chat when the page refreshes
 
  - maybe make page to show items added by the user
  - implement google recaptcha
  - cas login
- - support functionality
  - user review
  - fix css
 

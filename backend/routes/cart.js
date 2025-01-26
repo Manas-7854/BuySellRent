@@ -14,19 +14,18 @@ router.get('/:userid', (req, res) => {
 
 });
 
-// place all the orders in the cart
+// remove items from cart
 router.post('/:userid', (req, res) => {
   const userId = req.params.userid; // Get the userId from the route parameter
-  const cartItems = req.body.cartItems; // Get the cart items from the request body
+  const orderId = req.body.orderId; // Get the orderId from the request body
 
-  console.log(cartItems);
+  console.log("orderId", orderId);
 
-  const generateOtp = () => Math.floor(1000 + Math.random() * 9000).toString();
-  // Update the status of all cart items to 'completed'
-  Order.updateMany(
-    { buyerId: userId, status: 'inCart' },
-    { status: 'pending', otp: generateOtp() },
-  ).then(() => res.sendStatus(200));
+  Order.findByIdAndDelete(orderId).then(() => {
+    Order.find(
+      { buyerId: userId, status: 'inCart' },
+    ).then(res.status(200).json("Order removed successfully"));
+  });
 });
 
 // if single item deletion is not possible the clear the whole cart
