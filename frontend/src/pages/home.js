@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams to get the dynamic user ID from the URL
 
+import axios from 'axios'; // Import axios for making HTTP requests
 // pages and components
 import Navbar from '../components/navbar';
 
@@ -62,11 +63,27 @@ const Home = () => {
   };
 
   // Handle form submission (save changes)
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Log the new name and email
+    console.log("New Name:", editedDetails.name);
+    console.log("New Email:", editedDetails.email);
+
+    const response = axios.post(`http://localhost:4000/home/${userId}`, { name:editedDetails.name, email:editedDetails.email });
+  
+    if (response.status === 200) {
+      console.log("Details updated successfully");
+    }
+    else {
+      console.log("Details update failed");
+    }
+  
+    // Save the changes
     setUserDetails(editedDetails); // Save the changes
     setIsEditing(false); // Close the edit form
   };
+  
 
   // Show loading indicator or error message if data is not yet loaded
   if (loading) {

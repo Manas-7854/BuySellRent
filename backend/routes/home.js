@@ -20,6 +20,18 @@ router.get('/:id', (req, res) => {
         });
 });
 
+//update user details
+router.post('/:id', (req, res) => {
+    const { name, email } = req.body;
+    console.log("name: ", name);
+    console.log("email: ", email);
+
+    const userId = req.params.id;
+
+    User.findByIdAndUpdate(userId, { name, email }).then((result) => {
+        res.status(200).json(result);
+    });
+});
 
 
 // Update item by ID

@@ -12,7 +12,6 @@
     - implement otp encryption 
     - implement session/jwt
     - logout functionality
-    - make user details editable
     - add vendor name to the items 
     - in support refresh the chat when the page refreshes
 
