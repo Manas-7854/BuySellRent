@@ -30,6 +30,7 @@ const itemRoutes = require('./routes/item');
 const homeRoutes = require('./routes/home');
 const registerRoutes = require('./routes/register');
 const additemRoutes = require('./routes/add-item');
+const supportRoutes = require('./routes/support');
 
 // Use CORS to allow cross-origin requests
 app.use(cors());
@@ -53,4 +54,6 @@ app.use('/item', itemRoutes);
 app.use('/home', homeRoutes);
 
 app.use("/add-item", additemRoutes);
+
+app.use('/chat', supportRoutes);
 

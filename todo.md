@@ -10,10 +10,9 @@
 
 # TODO :
     - implement otp encryption 
-    - implement session/jwt (check if session is allowed)
-    - generate a random otp everytime
-    - add the remove functionality from cart do this by changing post route for placing orders from /cart/post to /orders/post and the use the /cart/post to remove items from the cart
+    - implement session/jwt
     - logout functionality
+    - add the remove functionality from cart do this by changing post route for placing orders from /cart/post to /orders/post and the use the /cart/post to remove items from the cart
     - make user details editable
     - add vendor name to the items 
 

@@ -21,10 +21,11 @@ router.post('/:userid', (req, res) => {
 
   console.log(cartItems);
 
+  const generateOtp = () => Math.floor(1000 + Math.random() * 9000).toString();
   // Update the status of all cart items to 'completed'
   Order.updateMany(
     { buyerId: userId, status: 'inCart' },
-    { status: 'pending', otp:'1234' },
+    { status: 'pending', otp: generateOtp() },
   ).then(() => res.sendStatus(200));
 });
 

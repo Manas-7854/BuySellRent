@@ -7,6 +7,11 @@ const Navbar = ({ userId }) => {
       <div style={styles.logo}>MyApp</div>
       <ul style={styles.navLinks}>
       <li>
+          <Link to={`/chat/${userId}`} style={styles.link}>
+            Support
+          </Link>
+        </li>
+      <li>
           <Link to={`/add-item/${userId}`} style={styles.link}>
             Add Item
           </Link>
@@ -31,11 +36,11 @@ const Navbar = ({ userId }) => {
             Orders
           </Link>
         </li>
-        <li>
-          <Link to={`/delivery/${userId}`} style={styles.link}>
-            Delivery
-          </Link>
-        </li>
+          <li>
+            <Link to={`/delivery/${userId}`} style={styles.link}>
+              Delivery
+            </Link>
+          </li>
       </ul>
     </nav>
   );
