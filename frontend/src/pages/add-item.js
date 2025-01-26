@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+// import useEffect
+import { useEffect } from "react";
 
 
 // import components
@@ -18,6 +20,12 @@ const AddItem = () => {
   const [message, setMessage] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  }, []);
 
   const handleAddItem = async (e) => {
     e.preventDefault();

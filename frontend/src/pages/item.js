@@ -7,8 +7,6 @@ import Navbar from '../components/navbar';
 
 const Item = () => {
   const { itemId, userId } = useParams(); // Get the item ID from the URL
-  console.log(itemId);
-  console.log(userId);
   const [item, setItem] = useState(null); // State to store the fetched item
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
@@ -35,7 +33,7 @@ const Item = () => {
 
   const addToCart = async (e) => {
   e.preventDefault();
-  const response = await axios.post(`http://localhost:4000/item/${itemId}`, { userId, item });
+  const response = await axios.post(`http://localhost:4000/item/${itemId}`, { userId, item: item.itemData });
   if (response.status === 200) {
     alert(`${response.data.message}`);
   };
@@ -73,17 +71,20 @@ const Item = () => {
       <Navbar userId={userId}/>
       <h2>Item Details</h2>
       <div className="item-details">
-        <img src={item.image} alt={item.description} style={{ width: '300px', height: '300px' }} />
+        
         <div>
-          <h2>{item.description}</h2>
+          <h2>{item.itemData.description}</h2>
           <p>
-            <strong>Category:</strong> {item.category}
+            <strong>Category:</strong> {item.itemData.category}
           </p>
           <p>
-            <strong>Original Price:</strong> ${item.originalPrice}
+            <strong>Original Price:</strong> ${item.itemData.originalPrice}
           </p>
           <p>
-            <strong>Selling Price:</strong> ${item.sellingPrice}
+            <strong>Selling Price:</strong> ${item.itemData.sellingPrice}
+          </p>
+          <p>
+            <strong>Seller Name:</strong> {item.sellerName}
           </p>
           <button onClick={addToCart}>Add to Cart</button>
         </div>

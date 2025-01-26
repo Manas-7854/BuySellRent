@@ -4,18 +4,38 @@ const router = express.Router();
 // import model
 const Order = require('../models/order');
 const Item = require('../models/item');
+const User = require('../models/user');
 
 // Get item by ID
 router.get('/:itemId', (req, res) => {
     const itemId = req.params.itemId;
 
-    Item.findById(itemId).then(item => {
+    Item.findById(itemId)
+    .then(item => {
       if (item) {
-        res.json(item);
+        // Store the item data in a variable (for example, an object or a separate variable)
+        const itemData = item; // Storing the item data in a variable
+  
+        console.log("itemData", itemData);
+        console.log("itemData.sellerID", itemData.sellerID);
+
+        // get the username using the sellerID
+        User.findById(itemData.sellerID)
+        .then(user => {
+          if (user) {
+            sellerName = user.name;
+            res.json({ itemData, sellerName });
+          } 
+        })
+
+        // Optionally, you can modify or process the data here before sending it
+  
+        // Send the item data in the response
       } else {
         res.status(404).json({ error: 'Item not found' });
       }
     });
+
   });
 
   router.post('/:itemId', async (req, res) => {

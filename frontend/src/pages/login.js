@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,14 +11,18 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:4000/login", { email, password });
-
-    if (response.status === 200) {
-      const userId = response.data._id;
-      navigate(`/home/${userId}`);
-    }
-    else{
-      setMessage("Login failed");
+    try {
+      const response = await axios.post("http://localhost:4000/login", { email, password });
+      
+      if (response.status === 200) {
+        // Store JWT token in localStorage or sessionStorage
+        localStorage.setItem('token', response.data.token); // Store token securely
+        
+        const userId = response.data.userId;
+        navigate(`/home/${userId}`);
+      }
+    } catch (error) {
+      setMessage("Login failed: " + (error.response ? error.response.data.message : error.message));
     }
   };
 

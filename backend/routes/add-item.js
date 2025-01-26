@@ -4,7 +4,10 @@ const router = express.Router();
 // import models
 const Item = require('../models/item');
 
-router.post('/:userid', (req, res) => {
+// import middleware
+const authMiddleware = require("../middleware/auth");
+
+router.post('/:userid',  (req, res) => {
     // get item details from the request
     userId = req.params.userid;
     console.log("userId:", userId);

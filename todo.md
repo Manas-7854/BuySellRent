@@ -12,7 +12,6 @@
     - implement otp encryption 
     - implement session/jwt
     - logout functionality
-    - add vendor name to the items 
     - in support refresh the chat when the page refreshes
 
  - maybe make page to show items added by the user

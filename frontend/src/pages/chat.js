@@ -5,7 +5,7 @@ import axios from "axios";
 import Navbar from "../components/navbar";
 
 function ChatPage() {
-    const { userId } = useParams();
+  const { userId } = useParams();
   const [userMessage, setUserMessage] = useState("");
   const [messages, setMessages] = useState([
     { role: "model", text: "Great to meet you. What would you like to know?" },

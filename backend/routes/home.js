@@ -5,10 +5,10 @@ const router = express.Router();
 const User = require('../models/user');
 
 // import middleware
-const authenticateToken = require('../middlewares/authMiddleware');
+const authMiddleware = require("../middleware/auth");
 
 // Get item by ID
-router.get('/:id', (req, res) => {
+router.get('/:id', authMiddleware, (req, res) => {
     const userId = req.params.id;
 
     User.findById(userId)
