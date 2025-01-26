@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Import useParams to get the dynamic user ID from the URL
+import axios from 'axios';
 
 // Pages and components
 import Navbar from '../components/navbar';
-import Item from '../components/item'; // Assuming the Item component is available
+import CartItem from '../components/cartitem'; // Assuming the Item component is available
 
 const DeliveryPage = () => {
   const { userId } = useParams(); // Get the user ID from the URL
@@ -36,8 +37,6 @@ const DeliveryPage = () => {
     fetchDeliveryItems();
   }, []);
 
-  const deliveryOrders = itemsToDeliver.filter((item) => item.sellerId === parseInt(userId) && item.status === 'pending');
-
   // Handle OTP input change for each item
   const handleOtpChange = (itemId, value) => {
     setOtpMap((prevOtpMap) => ({
@@ -47,32 +46,24 @@ const DeliveryPage = () => {
   };
 
   // Handle OTP verification
-  const handleOtpVerification = async (itemId, enteredOtp) => {
-    console.log("the otp is correct")
-    // try {
-    //   const response = await fetch(`http://localhost:4000/delivery/${itemId}/verify`, {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ otp: enteredOtp }),
-    //   });
+  const handleOtpVerification = async (orderId, enteredOtp) => {
+    console.log("itemId", orderId);
+    console.log("enteredOtp", enteredOtp);
 
-    //   if (!response.ok) {
-    //     throw new Error('OTP verification failed');
-    //   }
+    const item = itemsToDeliver.find((item) => item.item_id === orderId);
 
-    //   const result = await response.json();
-    //   if (result.success) {
-    //     // Remove the item from the list when OTP is correct
-    //     const updatedItems = itemsToDeliver.filter((item) => item.id !== itemId);
-    //     setItemsToDeliver(updatedItems);
-    //     alert('Transaction completed successfully!');
-    //   } else {
-    //     alert('Incorrect OTP');
-    //   }
-    // } catch (err) {
-    //   console.error('Error verifying OTP:', err.message);
-    //   alert('Error verifying OTP');
-    // }
+    if (parseInt(enteredOtp) === item.otp) {
+      console.log("the otp is correct");
+      // send a post request with the order
+      console.log(item);
+      const response = await axios.post(`http://localhost:4000/delivery/${userId}`, { item });
+
+      if (response.status === 200) {
+        // Transaction completed successfully
+        console.log('Transaction completed successfully!');
+      }
+
+    }
   };
 
   return (
@@ -86,19 +77,19 @@ const DeliveryPage = () => {
         <p>Error: {error}</p>
       ) : (
         <div className="delivery-list">
-          {deliveryOrders.length > 0 ? (
-            deliveryOrders.map((item) => (
-              <div key={item.id} className="delivery-item">
-                <Item item={item.item} />
+          {itemsToDeliver.length > 0 ? (
+            itemsToDeliver.map((item) => (
+              <div key={item.item_id} className="delivery-item">
+                <CartItem order={item} userId={userId} />
 
                 <div className="otp-verification">
                   <input
                     type="text"
                     placeholder="Enter OTP"
-                    value={otpMap[item.id] || ''}
-                    onChange={(e) => handleOtpChange(item.id, e.target.value)}
+                    value={otpMap[item.item_id] || ''}
+                    onChange={(e) => handleOtpChange(item.item_id, e.target.value)}
                   />
-                  <button onClick={() => handleOtpVerification(item.id, otpMap[item.id])}>
+                  <button onClick={() => handleOtpVerification(item.item_id, otpMap[item.item_id])}>
                     Complete Transaction
                   </button>
                 </div>

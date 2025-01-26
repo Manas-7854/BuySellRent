@@ -36,7 +36,7 @@ const OrdersPage = () => {
 
   console.log("ordersData", ordersData);
   // Filter orders into categories
-  const boughtOrders = ordersData.filter((order) => order.status === 'completed' || order.buyerId === userId);
+  const boughtOrders = ordersData.filter((order) => order.status === 'completed' && order.buyerId === userId);
   const soldOrders = ordersData.filter((order) => order.status === 'completed' && order.sellerId === userId);
   const pendingOrders = ordersData.filter((order) => order.status === 'pending' && order.buyerId === userId);
 

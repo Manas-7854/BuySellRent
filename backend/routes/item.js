@@ -16,21 +16,22 @@ router.get('/:itemId', (req, res) => {
         res.status(404).json({ error: 'Item not found' });
       }
     });
-
   });
-
 
   router.post('/:itemId', async (req, res) => {
     try {
       const { userId, item } = req.body;
       const itemId = req.params.itemId;
-  
-      // Check if an item with status 'inCart' already exists for the given itemId and buyerId
+
+      // Check if an item with status 'inCart'/'pending' already exists for the given itemId and buyerId
       const existingOrder = await Order.findOne({
         item_id : itemId,
         buyerId: userId,
       });
   
+      if (item.sellerID === userId) {
+        return res.status(200).json({ message: 'You cannot add your own item to cart.' });
+      }
       if (existingOrder) {
         return res.status(200).json({ message: 'Item already in cart.' });
       }
@@ -46,7 +47,7 @@ router.get('/:itemId', (req, res) => {
         item_category: item.category,
   
         buyerId: userId,
-        sellerId: item.sellerId,
+        sellerId: item.sellerID,
         status: 'inCart',
         otp: null,
       });

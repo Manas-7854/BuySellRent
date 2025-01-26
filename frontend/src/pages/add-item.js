@@ -61,7 +61,7 @@ const AddItem = () => {
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <Navbar />
+        <Navbar userId={userId}/>
       <h1>Add Item</h1>
       <form onSubmit={handleAddItem}>
         <div>

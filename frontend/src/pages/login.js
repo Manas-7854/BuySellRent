@@ -16,11 +16,10 @@ const Login = () => {
 
     if (response.status === 200) {
       const userId = response.data._id;
-      console.log("userId", userId)
       navigate(`/home/${userId}`);
     }
     else{
-      console.log("Login failed");
+      setMessage("Login failed");
     }
   };
 

@@ -4,6 +4,9 @@ const router = express.Router();
 // import models
 const User = require('../models/user');
 
+// import middleware
+const authenticateToken = require('../middlewares/authMiddleware');
+
 // Get item by ID
 router.get('/:id', (req, res) => {
     const userId = req.params.id;
@@ -16,6 +19,8 @@ router.get('/:id', (req, res) => {
             console.log(err);
         });
 });
+
+
 
 // Update item by ID
 router.put('/:id', (req, res) => {

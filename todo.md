@@ -9,21 +9,19 @@
 
 
 # TODO :
-    - implement delivery page and order completion
+    - implement otp encryption 
     - implement session/jwt (check if session is allowed)
-    - hash the password and the otp before storing
     - generate a random otp everytime
-    - make sure user cannot add item to cart added by that user
     - add the remove functionality from cart do this by changing post route for placing orders from /cart/post to /orders/post and the use the /cart/post to remove items from the cart
     - logout functionality
     - make user details editable
     - add vendor name to the items 
 
-    - maybe make page to show items added by the user
-    
-
+ - maybe make page to show items added by the user
  - implement google recaptcha
- - otp functionality
  - cas login
  - support functionality
+ - user review
+ - fix css
+
  

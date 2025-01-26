@@ -1,21 +1,22 @@
 const experss = require('express');
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
+
 const router = experss.Router();
 
 // import models
 const User = require('../models/user');
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
 
     const { username, password, email } = req.body;
-    
-    console.log("name:", username);
-    console.log("email:", email);
-    console.log("password:", password);
 
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    
     const user = new User({
         name: username,
         email: email,
-        password: password
+        password: hashedPassword
     });
 
     user.save()
@@ -25,11 +26,6 @@ router.post('/', (req, res) => {
         .catch((err) => {
             console.log(err);
         });
-
-    
-
-    // check if the user already exists in not the save else return error
-
 
 });
 

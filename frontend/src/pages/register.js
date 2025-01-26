@@ -1,5 +1,5 @@
 // src/components/Register.js
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
@@ -19,10 +19,6 @@ const Register = () => {
       setMessage("Passwords do not match");
       return;
     }
-
-    console.log("username", username);
-    console.log("password", password);
-    console.log("email", email);
 
     const response = await axios.post("http://localhost:4000/register", { username, password, email });
 

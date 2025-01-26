@@ -31,7 +31,8 @@ const Home = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/home/${userId}`);
+        const response = await fetch(`http://localhost:4000/home/${userId}`, {
+        });
         const data = await response.json();
 
         if (response.ok) {
