@@ -10,8 +10,6 @@
 
 # TODO :
     - implement otp encryption 
-    - implement session/jwt
-    - logout functionality
     - in support refresh the chat when the page refreshes
 
  - maybe make page to show items added by the user

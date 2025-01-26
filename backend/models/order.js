@@ -16,7 +16,7 @@ const orderSchema = new Schema({
     buyerId: String,
     sellerId: String,
     status: String,
-    otp: Number
+    otp: String,
 
 }, { timestamps: true });
 

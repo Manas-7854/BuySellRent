@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 
 // import models
 const Order = require('../models/order');
@@ -15,18 +16,28 @@ router.get('/:userid', authMiddleware, async (req, res) => {
 
 });
 
+
+// Utility function to hash OTP
+const hashOtp = async (otp) => {
+  const saltRounds = 10;
+  return bcrypt.hash(otp, saltRounds);
+};
+
 // place all the orders in the cart
-router.post('/:userid', (req, res) => {
+router.post('/:userid', async (req, res) => {
   const userId = req.params.userid; // Get the userId from the route parameter
   const cartItems = req.body.cartItems; // Get the cart items from the request body
 
   console.log(cartItems);
 
   const generateOtp = () => Math.floor(1000 + Math.random() * 9000).toString();
+
+  const otp = generateOtp();
+
   // Update the status of all cart items to 'completed'
   Order.updateMany(
     { buyerId: userId, status: 'inCart' },
-    { status: 'pending', otp: generateOtp() },
+    { status: 'pending', otp: otp },
   ).then(() => res.sendStatus(200));
 });
 
