@@ -9,11 +9,7 @@
 
 
 # TODO :
-    - implement otp encryption 
-    - in support refresh the chat when the page refreshes
 
- - maybe make page to show items added by the user
- - implement google recaptcha
  - cas login
  - user review
  - fix css

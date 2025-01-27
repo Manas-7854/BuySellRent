@@ -22,7 +22,7 @@ const hashOtp = async (otp) => {
   const saltRounds = 10;
   return bcrypt.hash(otp, saltRounds);
 };
-
+ 
 // place all the orders in the cart
 router.post('/:userid', async (req, res) => {
   const userId = req.params.userid; // Get the userId from the route parameter
@@ -33,11 +33,14 @@ router.post('/:userid', async (req, res) => {
   const generateOtp = () => Math.floor(1000 + Math.random() * 9000).toString();
 
   const otp = generateOtp();
-
+  console.log(otp);
+  // const otp = 1234;
+  const hashValue = await hashOtp(otp.toString());
+  console.log(hashValue);
   // Update the status of all cart items to 'completed'
   Order.updateMany(
     { buyerId: userId, status: 'inCart' },
-    { status: 'pending', otp: otp },
+    { status: 'pending' },
   ).then(() => res.sendStatus(200));
 });
 

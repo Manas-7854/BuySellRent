@@ -50,20 +50,30 @@ const DeliveryPage = () => {
     console.log("itemId", orderId);
     console.log("enteredOtp", enteredOtp);
 
-    const item = itemsToDeliver.find((item) => item.item_id === orderId);
+    const response = await axios.post(`http://localhost:4000/verifyOtp/${orderId}`, { enteredOtp });
 
-    if (parseInt(enteredOtp) === item.otp) {
-      console.log("the otp is correct");
-      // send a post request with the order
-      console.log(item);
-      const response = await axios.post(`http://localhost:4000/delivery/${userId}`, { item });
-
-      if (response.status === 200) {
-        // Transaction completed successfully
-        console.log('Transaction completed successfully!');
-      }
-
+    if (response.status === 200) {
+      // OTP verification successful
+      alert("Transaction completed successfully!");
     }
+    else {
+      alert("Incorrect OTP");
+    }
+
+    // const item = itemsToDeliver.find((item) => item.item_id === orderId);
+
+    // if (parseInt(enteredOtp) === item.otp) {
+    //   console.log("the otp is correct");
+    //   // send a post request with the order
+    //   console.log(item);
+    //   const response = await axios.post(`http://localhost:4000/delivery/${userId}`, { item });
+
+    //   if (response.status === 200) {
+    //     // Transaction completed successfully
+    //     console.log('Transaction completed successfully!');
+    //   }
+
+    // }
   };
 
   return (
@@ -89,7 +99,7 @@ const DeliveryPage = () => {
                     value={otpMap[item.item_id] || ''}
                     onChange={(e) => handleOtpChange(item.item_id, e.target.value)}
                   />
-                  <button onClick={() => handleOtpVerification(item.item_id, otpMap[item.item_id])}>
+                  <button onClick={() => handleOtpVerification(item._id, otpMap[item.item_id])}>
                     Complete Transaction
                   </button>
                 </div>

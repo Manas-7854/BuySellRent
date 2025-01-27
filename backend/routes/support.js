@@ -18,17 +18,44 @@ let chat = model.startChat({
     ],
   });   
 
-router.get('/', (req, res) => {
+router.get('/',async (req, res) => {
+  console.log("page refresh");
 
-    console.log("Resetting chat");  
+  chat = model.startChat({
+    history: [
+      {
+        role: "user",
+        parts: [{ text: "Hello" }],
+      },
+      {
+        role: "model",
+        parts: [{ text: "Great to meet you. What would you like to know?" }],
+      },
+    ],
+  });   
+
+  history = await chat.getHistory();
+  console.log(history);
+
+  // chat.startChat({
+  //   history: [
+  //     {
+  //       role: "user",
+  //       parts: [{ text: "Hello" }],
+  //     },
+  //     {
+  //       role: "model",
+  //       parts: [{ text: "Great to meet you. What would you like to know?" }],
+  //     },
+  //   ],
+  // });
+
 });
 // API endpoint for chat
 router.post('/', async (req, res) => {
     try {
         const userMessage = req.body.message;
-        console.log(userMessage);
         let result = await chat.sendMessage(userMessage);
-        console.log(result.response.text());
         res.json({ response: result.response.text() });
 
       } catch (error) {

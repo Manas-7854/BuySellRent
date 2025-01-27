@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useParams to get the dynamic user ID from the URL
 import Navbar from '../components/navbar'; // Navbar Component
 import CartItem from '../components/cartitem'; // CartItem Component
+import axios from 'axios'; // Axios for API requests
 
 const token = localStorage.getItem("token");
 
@@ -53,7 +54,24 @@ const OrdersPage = () => {
   const soldOrders = ordersData.filter((order) => order.status === 'completed' && order.sellerId === userId);
   const pendingOrders = ordersData.filter((order) => order.status === 'pending' && order.buyerId === userId);
 
+  // Generate OTP for the order
+  const generateOtp = async (orderId) => {
+    // console.log("enteredOtp", enteredOtp);
 
+    const response = await axios.get(`http://localhost:4000/generateOtp/${orderId}`);
+
+    const newOtp = response.data.otp;
+    alert(`OTP generated: ${newOtp}`);
+
+    // if (response.status === 200) {
+    //   // OTP verification successful
+    //   alert("Transaction completed successfully!");
+    // }
+    // else {
+    //   alert("Incorrect OTP");
+    // }
+
+  };
 
   return (
     <div className="orders-page">
@@ -99,7 +117,9 @@ const OrdersPage = () => {
                   <div key={order._id} className="order-item pending-order">
                     <CartItem order={order} userId={userId}/>
                     <div className="otp">
-                      <p>OTP: {order.otp}</p>
+                    <button onClick={() => generateOtp(order._id)}>
+                    generateOtp
+                  </button>
                     </div>
                   </div>
                 ))
