@@ -1,4 +1,5 @@
-// src/components/Logout.js
+// Component to log user out of the application
+
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 

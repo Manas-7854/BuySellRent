@@ -1,5 +1,6 @@
-import {Link} from 'react-router-dom';
+// Component for displaying an item in the list of items
 
+import {Link} from 'react-router-dom';
 
 const Item = ({ item, userId }) => (
     <div className="item">

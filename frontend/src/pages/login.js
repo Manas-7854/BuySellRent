@@ -1,22 +1,23 @@
-// src/components/Login.js
+// Required Modules
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  // State Variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
+  // Handle Login
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:4000/login", { email, password });
       
       if (response.status === 200) {
-        // Store JWT token in localStorage or sessionStorage
-        localStorage.setItem('token', response.data.token); // Store token securely
+        localStorage.setItem('token', response.data.token); 
         
         const userId = response.data.userId;
         navigate(`/home/${userId}`);
@@ -27,30 +28,32 @@ const Login = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email: </label>
+    <div className="login-container">
+      <h1 className="login-heading">Login</h1>
+      <form onSubmit={handleLogin} className="login-form">
+        <div className="login-field">
+          <label className="login-label">Email:</label>
           <input
             type="text"
+            className="login-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>Password: </label>
+        <div className="login-field">
+          <label className="login-label">Password:</label>
           <input
             type="password"
+            className="login-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" className="login-button">Login</button>
       </form>
-      <p>{message}</p>
+      <p className="login-message">{message}</p>
     </div>
   );
 };

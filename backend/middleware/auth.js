@@ -1,7 +1,10 @@
-// middleware/auth.js
+
+// Dependencies
 const jwt = require("jsonwebtoken");
+
 const JWT_SECRET = "laddu"; // Use the same secret key as in login.js
 
+// Middleware to check if the user is authenticated
 const authMiddleware = (req, res, next) => {
   const token = req.header("Authorization")?.replace("Bearer ", "");
 
@@ -11,7 +14,7 @@ const authMiddleware = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; // Attach the decoded user data to the request object
+    req.user = decoded;
     next();
   } catch (error) {
     return res.status(401).json({ message: "Invalid or expired token" });

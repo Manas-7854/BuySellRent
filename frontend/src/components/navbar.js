@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 
 const Navbar = ({ userId }) => {
@@ -6,16 +5,16 @@ const Navbar = ({ userId }) => {
     <nav style={styles.navbar}>
       <div style={styles.logo}>MyApp</div>
       <ul style={styles.navLinks}>
-      <li>
+        <li>
           <Link to={`/chat/${userId}`} style={styles.link}>
             Support
           </Link>
         </li>
-      <li>
+        <li>
           <Link to={`/add-item/${userId}`} style={styles.link}>
             Add Item
           </Link>
-        </li>     
+        </li>
         <li>
           <Link to={`/home/${userId}`} style={styles.link}>
             Home
@@ -36,12 +35,16 @@ const Navbar = ({ userId }) => {
             Orders
           </Link>
         </li>
-          <li>
-            <Link to={`/delivery/${userId}`} style={styles.link}>
-              Delivery
-            </Link>
-          </li>
-
+        <li>
+          <Link to={`/delivery/${userId}`} style={styles.link}>
+            Delivery
+          </Link>
+        </li>
+        <li>
+          <Link to={`/logout`} style={styles.link}>
+            Logout
+          </Link>
+        </li>
       </ul>
     </nav>
   );
@@ -52,13 +55,14 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#333',
-    color: '#fff',
+    backgroundColor: '#155E95', /* Deep Blue */
+    color: '#FFF6B3', /* Pale Yellow */
     padding: '10px 20px',
   },
   logo: {
     fontSize: '1.5rem',
     fontWeight: 'bold',
+    color: '#FFF6B3', /* Pale Yellow */
   },
   navLinks: {
     listStyle: 'none',
@@ -69,9 +73,12 @@ const styles = {
   },
   link: {
     textDecoration: 'none',
-    color: '#fff',
+    color: '#FFF6B3', /* Pale Yellow */
     fontSize: '1rem',
     fontWeight: '500',
+  },
+  linkHover: {
+    color: '#6A80B9', /* Light Blue */
   },
 };
 

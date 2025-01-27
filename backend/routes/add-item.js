@@ -1,30 +1,24 @@
+// Router for adding new item to the database
+
 const express = require('express');
 const router = express.Router();
 
 // import models
 const Item = require('../models/item');
 
-// import middleware
-const authMiddleware = require("../middleware/auth");
-
 router.post('/:userid',  (req, res) => {
-    // get item details from the request
-    userId = req.params.userid;
-    console.log("userId:", userId);
+    userId = req.params.userid;  // get userId from the url
 
-    const { description, originalPrice, sellingPrice, category } = req.body;
-    console.log("description:", description);
-    console.log("originalPrice:", originalPrice);
-    console.log("sellingPrice:", sellingPrice);
-    console.log("category:", category);
+    const { description, originalPrice, sellingPrice, category } = req.body; // parse the request
 
+    // create new item and add to the database
     const item = new Item({
         sellerID: userId,
         description: description,
         originalPrice: originalPrice,
         sellingPrice: sellingPrice,
         category: category,
-    });
+    }); 
 
     item.save()
         .then((result) => {

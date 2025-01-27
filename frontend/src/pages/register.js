@@ -1,80 +1,99 @@
-// src/components/Register.js
+// Required Modules
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  // State Variables
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
-
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
+  // Handle Register
   const handleRegister = async (e) => {
     e.preventDefault();
 
+    // Check if passwords match
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
       return;
     }
 
-    const response = await axios.post("http://localhost:4000/register", { username, password, email });
+    // Send user Details to server
+    try {
+      const response = await axios.post("http://localhost:4000/register", {
+        username,
+        password,
+        email,
+      });
 
-    if (response.status === 200) {
-        const userId = response.data._id;
-        console.log("userId", userId)
-        navigate(`/home/${userId}`);
-    } else {
-      setMessage("Registration failed");
-      console.log("Registration failed");
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data.token); // Store token locally
+		console.log(response.data.token);
+		console.log(response.data.userId);
+        navigate(`/home/${response.data.userId}`);
+
+      } else if (response.status === 201) {
+        setMessage("Email already exists");
+      }
+    } catch (error) {
+      setMessage(
+        "Registration failed: " +
+          (error.response ? error.response.data.message : error.message)
+      );
     }
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Register</h1>
-      <form onSubmit={handleRegister}>
-        <div>
-          <label>Username: </label>
+    <div className="register-container">
+      <h1 className="register-heading">Register</h1>
+      <form onSubmit={handleRegister} className="register-form">
+        <div className="register-field">
+          <label className="register-label">Username:</label>
           <input
             type="text"
+            className="register-input"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>Password: </label>
+        <div className="register-field">
+          <label className="register-label">Password:</label>
           <input
             type="password"
+            className="register-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>Confirm Password: </label>
+        <div className="register-field">
+          <label className="register-label">Confirm Password:</label>
           <input
             type="password"
+            className="register-input"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-        </div>        
-        <div>
-          <label>Email</label>
+        </div>
+        <div className="register-field">
+          <label className="register-label">Email:</label>
           <input
             type="email"
+            className="register-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" className="register-button">Register</button>
       </form>
-      <p>{message}</p>
+      <p className="register-message">{message}</p>
     </div>
   );
 };

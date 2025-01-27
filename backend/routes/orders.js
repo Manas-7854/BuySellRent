@@ -1,6 +1,9 @@
+// Require Modules
 const express = require('express');
-const router = express.Router();
 const bcrypt = require('bcrypt');
+
+// Router
+const router = express.Router();
 
 // import models
 const Order = require('../models/order');
@@ -8,35 +11,17 @@ const Order = require('../models/order');
 // import middleware
 const authMiddleware = require('../middleware/auth');
 
+// Get all the Orders in the Database
 router.get('/:userid', authMiddleware, async (req, res) => {
-  const userId = parseInt(req.params.userid);
-
-    // Find orders where userId matches buyerId or sellerId, and status is pending or completed
-  Order.find().then((orders) => { res.json(orders); });
-
+   Order.find().then((orders) => { res.json(orders); });
 });
 
-
-// Utility function to hash OTP
-const hashOtp = async (otp) => {
-  const saltRounds = 10;
-  return bcrypt.hash(otp, saltRounds);
-};
  
-// place all the orders in the cart
+// Place Order for all the Items in Cart
 router.post('/:userid', async (req, res) => {
-  const userId = req.params.userid; // Get the userId from the route parameter
+  const userId = req.params.userid; // Get the userId from the url
   const cartItems = req.body.cartItems; // Get the cart items from the request body
 
-  console.log(cartItems);
-
-  const generateOtp = () => Math.floor(1000 + Math.random() * 9000).toString();
-
-  const otp = generateOtp();
-  console.log(otp);
-  // const otp = 1234;
-  const hashValue = await hashOtp(otp.toString());
-  console.log(hashValue);
   // Update the status of all cart items to 'completed'
   Order.updateMany(
     { buyerId: userId, status: 'inCart' },

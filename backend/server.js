@@ -1,11 +1,10 @@
-
-// Import the required packages
+// Require Modules
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // Create an express app
 const app = express();
-const cors = require('cors');
 
 // set the port
 const PORT = 4000;
@@ -39,26 +38,15 @@ app.use(cors());
 app.use(express.json());
 
 // Use the routes
-
 app.use("/login", loginRoutes)
 app.use('/register', registerRoutes);
-
 app.use('/items', itemsRoutes);
-
 app.use('/cart', cartRoutes);
-
 app.use('/orders', ordersRoutes);
-
 app.use('/delivery', deliveryRoutes);
-
 app.use('/item', itemRoutes);
-
 app.use('/home', homeRoutes);
-
 app.use("/add-item", additemRoutes);
-
 app.use('/chat', supportRoutes);
-
 app.use('/verifyOtp', verifyOtpRoutes);
-
 app.use('/generateOtp', generateOtpRoutes);

@@ -1,5 +1,5 @@
+// Required Modules 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 
 //pages & components
 import Home from './pages/home';
@@ -58,7 +58,7 @@ function App() {
 
             {/* Logout Page */}
             <Route path='/logout' element={<Logout />} />
-            
+
 
           </Routes>
         </div>

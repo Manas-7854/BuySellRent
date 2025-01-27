@@ -1,4 +1,7 @@
+// Required Libraries
 const express = require('express');
+
+// Router
 const router = express.Router();
 
 // import models
@@ -7,9 +10,8 @@ const Order = require('../models/order');
 // import middleware
 const authMiddleware = require("../middleware/auth");
 
-// Get cart items by userId
+// Get cart items for a specific user
 router.get('/:userid',authMiddleware,  (req, res) => {
-
   const userId = req.params.userid; // Get the userId from the route parameter
 
   Order.find(
@@ -18,12 +20,10 @@ router.get('/:userid',authMiddleware,  (req, res) => {
 
 });
 
-// remove items from cart
+// remove item from cart
 router.post('/:userid', (req, res) => {
   const userId = req.params.userid; // Get the userId from the route parameter
   const orderId = req.body.orderId; // Get the orderId from the request body
-
-  console.log("orderId", orderId);
 
   Order.findByIdAndDelete(orderId).then(() => {
     Order.find(
@@ -31,7 +31,5 @@ router.post('/:userid', (req, res) => {
     ).then(res.status(200).json("Order removed successfully"));
   });
 });
-
-// if single item deletion is not possible the clear the whole cart
 
 module.exports = router;

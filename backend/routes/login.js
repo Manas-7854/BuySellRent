@@ -1,30 +1,29 @@
-// login.js
+// Required Modules
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken"); // Import jsonwebtoken
-const saltRounds = 10;
+const jwt = require("jsonwebtoken"); 
 
+// Router
 const router = express.Router();
 
 // import models
 const User = require("../models/user");
 
 // Secret key for JWT
-const JWT_SECRET = "laddu"; // Store this key securely in an environment variable
+const JWT_SECRET = "laddu"; 
 
 // POST route to handle login
 router.post("/", async (req, res) => {
   const { email, password } = req.body; // Get the email and password from the request body
 
-  
+  // Check if the user exists
   const user = await User.findOne({ email: email });
-  
   if (!user) {
     return res.status(400).json({ message: 'User not found or credentials are incorrect' });
   }
 
+  // Check if the password is correct
   const match = await bcrypt.compare(password, user.password);
-  
   if (!match) {
     return res.status(400).json({ message: 'Incorrect password' });
   }
