@@ -2,6 +2,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 //pages & components
+import LandingPage from './pages/landing';
 import Home from './pages/home';
 import ItemsPage from './pages/items-page';
 import Item from './pages/item';
@@ -20,6 +21,9 @@ function App() {
       <BrowserRouter>
         <div className='pages'>
           <Routes>
+
+            {/* Landing Page */}
+            <Route path='/' element={<LandingPage />} />
 
             {/* Login Page */}
             <Route path='/login' element={<Login />} />
