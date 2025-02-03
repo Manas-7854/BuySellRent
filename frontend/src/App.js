@@ -27,6 +27,8 @@ function App() {
 
             {/* Login Page */}
             <Route path='/login' element={<Login />} />
+            <Route path='/login/:userId/:token' element={<Login />} />
+
             {/* Register Page */}
             <Route path='/register' element={<Register />} />
 

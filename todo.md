@@ -11,8 +11,13 @@
 # TODO :
 
  - cas login
+ - add more user details
+ - only iiit email allowed
+ - tab thing in orders page
+ - remove item from every cart when order is placed
+ - make a notifications page
  - user review
  - landing page
-
+ - create .env file
 
  

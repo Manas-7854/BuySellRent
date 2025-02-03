@@ -47,6 +47,10 @@ const Register = () => {
     }
   };
 
+  const handleCASLogin = () => {
+    window.location.href = "http://localhost:4000/cas";
+  };
+
   return (
     <div className="register-container">
       <h1 className="register-heading">Register</h1>
@@ -94,6 +98,7 @@ const Register = () => {
         <button type="submit" className="register-button">Register</button>
       </form>
       <a href="/login" className="register-link">Already have an account? Login</a>
+      <button onClick={handleCASLogin} className="register-button">Login with CAS</button>
       <p className="register-message">{message}</p>
     </div>
   );
