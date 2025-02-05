@@ -46,6 +46,11 @@ const Navbar = ({ userId }) => {
           </Link>
         </li>
         <li>
+          <Link to={`/my-items/${userId}`} style={styles.link}>
+            My Items
+          </Link>
+        </li>
+        <li>
           <Link to={`/logout`} style={styles.link}>
             Logout
           </Link>

@@ -15,6 +15,7 @@ import AddItem from './pages/add-item';
 import ChatPage from './pages/chat';
 import Logout from './components/logout';
 import Notification from './pages/notification';
+import MyItemsPage from './pages/my-items';
 
 function App() {
   return (
@@ -66,6 +67,9 @@ function App() {
             {/* Notifications Page */}
             <Route path='/notification' element={<Notification />} />
             <Route path='/notification/:userId' element={<Notification />} />
+
+            {/* My Items Page */}
+            <Route path='/my-items/:userId' element={<MyItemsPage />} />
 
             {/* Logout Page */}
             <Route path='/logout' element={<Logout />} />

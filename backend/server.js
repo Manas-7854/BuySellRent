@@ -33,6 +33,7 @@ const supportRoutes = require('./routes/support');
 const verifyOtpRoutes = require('./routes/verifyOtp');
 const generateOtpRoutes = require('./routes/generateOtp');
 const notificationRoutes = require('./routes/notification');
+const myItemsRoutes = require('./routes/my-items');
 
 // Use CORS to allow cross-origin requests
 app.use(cors());
@@ -52,6 +53,7 @@ app.use('/chat', supportRoutes);
 app.use('/verifyOtp', verifyOtpRoutes);
 app.use('/generateOtp', generateOtpRoutes);
 app.use('/notification', notificationRoutes);
+app.use('/my-items', myItemsRoutes);
 
 
 // Handle CAS Login
