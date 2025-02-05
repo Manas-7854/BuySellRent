@@ -41,6 +41,11 @@ const Navbar = ({ userId }) => {
           </Link>
         </li>
         <li>
+          <Link to={`/notification/${userId}`} style={styles.link}>
+            Notifications
+          </Link>
+        </li>
+        <li>
           <Link to={`/logout`} style={styles.link}>
             Logout
           </Link>

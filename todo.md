@@ -10,6 +10,4 @@
 
 # TODO :
 
- - remove item from every cart when order is placed
- - make a notifications page
 

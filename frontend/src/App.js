@@ -14,6 +14,7 @@ import Register from './pages/register';
 import AddItem from './pages/add-item';
 import ChatPage from './pages/chat';
 import Logout from './components/logout';
+import Notification from './pages/notification';
 
 function App() {
   return (
@@ -61,6 +62,10 @@ function App() {
             {/* Chat Page */}
             <Route path='/chat' element={<ChatPage />} />
             <Route path='/chat/:userId' element={<ChatPage />} />
+
+            {/* Notifications Page */}
+            <Route path='/notification' element={<Notification />} />
+            <Route path='/notification/:userId' element={<Notification />} />
 
             {/* Logout Page */}
             <Route path='/logout' element={<Logout />} />
