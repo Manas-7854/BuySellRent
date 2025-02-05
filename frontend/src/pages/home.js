@@ -12,16 +12,10 @@ const Home = () => {
 
 	// State Variables
 	const navigate = useNavigate();
-	const [userDetails, setUserDetails] = useState({
-		name: '',
-		age: '',
-		branch: '',
-		institution: '',
-		year: '',
-	});
+	const [userDetails, setUserDetails] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [isEditing, setIsEditing] = useState(false);
-	const [editedDetails, setEditedDetails] = useState(userDetails);
+	const [editedDetails, setEditedDetails] = useState({});
 
 	// Fetch user details based on user ID
 	useEffect(() => {
@@ -30,26 +24,25 @@ const Home = () => {
 			navigate(`/login`);
 		}
 		const fetchUserDetails = async () => {
+
 			try {
-				const response = await fetch(`http://localhost:4000/home/${userId}`, {
+				const response = await axios.get(`http://localhost:4000/home/${userId}`, {
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},
 				});
-				const data = await response.json();
+				const data = await response.data;
 
-				if (response.ok) {
+				if (response.status === 200) {
 					setUserDetails(data); // Update state with fetched user data
 					setEditedDetails(data); // Set initial edited details
-					setLoading(false); // Set loading to false once data is loaded
-				} else {
-					console.error('Error fetching user data:', data);
 					setLoading(false);
 				}
-			} catch (error) {
-				console.error('Error fetching user data:', error);
-				setLoading(false);
 			}
+			catch (error) {
+				console.log(error);
+			}
+
 		};
 
 		fetchUserDetails();
@@ -68,22 +61,19 @@ const Home = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		// Log the new name and email
-		console.log("New Name:", editedDetails.name);
-		console.log("New Email:", editedDetails.email);
+		try {
+			const response = await axios.post(`http://localhost:4000/home/${userId}`, editedDetails);
 
-		const response = axios.post(`http://localhost:4000/home/${userId}`, { name: editedDetails.name, email: editedDetails.email });
-
-		if (response.status === 200) {
-			console.log("Details updated successfully");
+			if (response.status === 200) {
+				console.log("Details updated successfully");
+				setUserDetails(editedDetails); // Save the changes
+				setIsEditing(false); // Close the edit form
+			} else {
+				console.log("Details update failed");
+			}
+		} catch (error) {
+			console.error("Error updating user details:", error);
 		}
-		else {
-			console.log("Details update failed");
-		}
-
-		// Save the changes
-		setUserDetails(editedDetails); // Save the changes
-		setIsEditing(false); // Close the edit form
 	};
 
 	// Show loading indicator or error message if data is not yet loaded
@@ -92,45 +82,81 @@ const Home = () => {
 	}
 
 	return (
-    <div>
-
+		<div>
 			<Navbar userId={userId} />
-		<div style={styles.container} className='home-container'>
-			<h1 className='home-heading'>Your Details</h1>
-			<p className='user-info'>Name: {userDetails.name}</p>
-			<p className='user-info'>Email: {userDetails.email}</p>
+			<div style={styles.container} className='home-container'>
+				<h1 className='home-heading'>Your Details</h1>
 
-			<button className='edit-button' onClick={() => setIsEditing(true)}>Edit Details</button>
+				{/* Display only available details */}
+				{userDetails.name && <p className='user-info'>Name: {userDetails.name}</p>}
+				{userDetails.lastName && <p className='user-info'>Last Name: {userDetails.lastName}</p>}
+				{userDetails.email && <p className='user-info'>Email: {userDetails.email}</p>}
+				{userDetails.age && <p className='user-info'>Age: {userDetails.age}</p>}
+				{userDetails.contactNumber && <p className='user-info'>Contact Number: {userDetails.contactNumber}</p>}
 
-			{isEditing && (
-        <div>
-					<h2 className='home-heading'>Edit Your Details</h2>
-					<form className='edit-form' onSubmit={handleSubmit}>
-						<div>
-							<label className='form-label'>Name:</label>
-							<input className='form-input'
-								type="text"
-								name="name"
-								value={editedDetails.name}
-								onChange={handleChange}
-							/>
-						</div>
-						<div>
-							<label className='form-label'>Email:</label>
-							<input className='form-input'
-								type="text"
-								name="email"
-								value={editedDetails.email}
-								onChange={handleChange}
-                />
-						</div>
-						<button className='save-button' type="submit">Save Changes</button>
-						<button className='cancel-button' type="button" onClick={() => setIsEditing(false)}>Cancel</button>
-					</form>
-				</div>
-			)}
+				<button className='edit-button' onClick={() => setIsEditing(true)}>Edit Details</button>
+
+				{isEditing && (
+					<div>
+						<h2 className='home-heading'>Edit Your Details</h2>
+						<form className='edit-form' onSubmit={handleSubmit}>
+							<div>
+								<label className='form-label'>Name:</label>
+								<input
+									className='form-input'
+									type="text"
+									name="name"
+									value={editedDetails.name || ""}
+									onChange={handleChange}
+								/>
+							</div>
+							<div>
+								<label className='form-label'>Last Name:</label>
+								<input
+									className='form-input'
+									type="text"
+									name="lastName"
+									value={editedDetails.lastName || ""}
+									onChange={handleChange}
+								/>
+							</div>
+							<div>
+								<label className='form-label'>Email:</label>
+								<input
+									className='form-input'
+									type="email"
+									name="email"
+									value={editedDetails.email || ""}
+									onChange={handleChange}
+								/>
+							</div>
+							<div>
+								<label className='form-label'>Age:</label>
+								<input
+									className='form-input'
+									type="number"
+									name="age"
+									value={editedDetails.age || ""}
+									onChange={handleChange}
+								/>
+							</div>
+							<div>
+								<label className='form-label'>Contact Number:</label>
+								<input
+									className='form-input'
+									type="number"
+									name="contactNumber"
+									value={editedDetails.contactNumber || ""}
+									onChange={handleChange}
+								/>
+							</div>
+							<button className='save-button' type="submit">Save Changes</button>
+							<button className='cancel-button' type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+						</form>
+					</div>
+				)}
+			</div>
 		</div>
-</div>
 	);
 };
 
@@ -142,7 +168,6 @@ const styles = {
 		justifyContent: 'flex-start',  // Keep content at the top
 		alignItems: 'center',
 		padding: '20px',
-    
 	},
 };
 

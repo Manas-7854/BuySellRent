@@ -25,6 +25,7 @@ router.post('/:userid', (req, res) => {
   const userId = req.params.userid; // Get the userId from the route parameter
   const orderId = req.body.orderId; // Get the orderId from the request body
 
+  console.log(userId, orderId);
   Order.findByIdAndDelete(orderId).then(() => {
     Order.find(
       { buyerId: userId, status: 'inCart' },

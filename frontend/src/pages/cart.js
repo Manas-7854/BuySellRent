@@ -75,7 +75,12 @@ const MyCartPage = () => {
 			console.log("Item removed successfully");
 
 			// Refetch the cart items
-			const response = await fetch(`http://localhost:4000/cart/${userId}`);
+			const response = await fetch(`http://localhost:4000/cart/${userId}`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				});
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}

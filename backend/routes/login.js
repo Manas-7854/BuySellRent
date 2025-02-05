@@ -1,7 +1,7 @@
 // Required Modules
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken"); 
+const jwt = require("jsonwebtoken");
 
 // Router
 const router = express.Router();
@@ -10,11 +10,16 @@ const router = express.Router();
 const User = require("../models/user");
 
 // Secret key for JWT
-const JWT_SECRET = "laddu"; 
+const JWT_SECRET = "laddu";
 
 // POST route to handle login
 router.post("/", async (req, res) => {
   const { email, password } = req.body; // Get the email and password from the request body
+
+  // Validate email domain
+  if (!email.endsWith('iiit.ac.in')) {
+    return res.status(400).json({ error: 'Invalid email domain. Please use an email ending in .iiit.ac.in' });
+  }
 
   // Check if the user exists
   const user = await User.findOne({ email: email });

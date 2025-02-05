@@ -32,7 +32,7 @@ const Login = () => {
         navigate(`/home/${userId}`);
       }
     } catch (error) {
-      setMessage("Login failed: " + (error.response ? error.response.data.message : error.message));
+      setMessage("Login failed: " + ( error.response?.data?.error ));
     }
   };
 

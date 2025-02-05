@@ -4,35 +4,50 @@ const express = require('express');
 // Router
 const router = express.Router();
 
-// import models
+// Import models
 const User = require('../models/user');
 
-// import middleware
+// Import middleware
 const authMiddleware = require("../middleware/auth");
 
-// Return User detaisl
-router.get('/:id', authMiddleware, (req, res) => {
+// Return User details
+router.get('/:id', authMiddleware, async (req, res) => {
     const userId = req.params.id; // Get the userId from the url
 
-    // Find the user by userId
-    User.findById(userId)
-    .then((result) => {
-        res.json(result);
-    })
-    .catch((err) => {
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+        res.json(user);
+    } catch (err) {
         console.log(err);
-    });
+        res.status(500).json({ error: "Server error" });
+    }
 });
 
-//update user details
-router.post('/:id', (req, res) => {
-    const userId = req.params.id; // get the userId from the url
-    const { name, email } = req.body; // get the user details from the request body
+// Update user details
+router.post('/:id', async (req, res) => {
+    const userId = req.params.id; // Get the userId from the url
+    const updatedDetails = req.body; // Get user details from the request body
 
-    // update the user details
-    User.findByIdAndUpdate(userId, { name, email }).then((result) => {
-        res.status(200).json(result);
-    });
+    // Validate email domain
+    if (!updatedDetails.email.endsWith('iiit.ac.in')) {
+        console.log("Invalid email detected")
+        return res.status(400).json({ message : 'Invalid email domain. Please use an email ending in .iiit.ac.in' });
+    }
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(userId, updatedDetails, { new: true });
+        if (!updatedUser) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error("Error updating user:", error);
+        res.status(500).json({ error: "Server error" });
+    }
 });
 
 module.exports = router;

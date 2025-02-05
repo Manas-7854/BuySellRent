@@ -106,3 +106,7 @@ app.get("/cas", cas.bounce, async (req, res) => {
   // redirect to login page with id and token in the url
   res.redirect(`http://localhost:3000/login/${user._id}/${token}`);
 });
+
+app.get("/logout", cas.logout, (req, res) => {
+  res.redirect(`http://localhost:3000/login`);
+})

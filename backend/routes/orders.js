@@ -18,9 +18,8 @@ router.get('/:userid', authMiddleware, async (req, res) => {
 
  
 // Place Order for all the Items in Cart
-router.post('/:userid', async (req, res) => {
+router.post('/:userid', (req, res) => {
   const userId = req.params.userid; // Get the userId from the url
-  const cartItems = req.body.cartItems; // Get the cart items from the request body
 
   // Update the status of all cart items to 'completed'
   Order.updateMany(
